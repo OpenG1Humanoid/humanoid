@@ -15,16 +15,25 @@ for the G1 (pose copying, teleoperation, RL) carry over.
 ## What's in this repo
 
 ```
-g1_servo_arm.scad        # every printable part (set side + part)
-assembly.scad            # the whole torso + both arms, posable (qL / qR joint angles)
-parts_left/ parts_right/ # one file per printable arm part per side: open, F6, export STL
-parts_torso/             # torso + its two shoulder hatches
-hardware/                # printed hubs and idler pins
-stl/                     # source meshes: the G1 link STLs, the torso split into bodies,
-                         #   cleaned rubber-hand meshes, voxel fallbacks
-generator/               # design.py (all joint features) + emit.py (writes the .scad files)
-previews/                # renders: originals vs servo version
+OpenScad/
+  assembly/assembly.scad   # the whole torso + both arms, posable (qL / qR joint angles)
+  parts_left/ parts_right/ # one file per printable arm part per side: open, F6, export STL
+  parts_torso/             # one-piece torso + its two shoulder hatches (old torso)
+  torso_frame/             # torso on a 2020 aluminium frame: torso_frame.scad, README, generator/
+  hardware/                # printed hubs and idler pins
+  head/head.scad           # dome head with the RealSense D455
+  lib/                     # g1_servo_arm.scad + torso_frame_lib.scad (included by the files above)
+STL/
+  arms/                    # G1 arm link STLs, fixed shoulder roll link, cleaned rubber hands
+  torso/                   # G1 torso split into bodies + voxel fallback
+  torso_frame/             # printed parts of the framed torso
+  head/                    # Unitree head_link.STL (stock collar) + exported head parts
+  torso_waist_parts_unmodified/
 ```
+
+Open any `.scad` file from inside its own folder (File → Open). Every file you open sits one folder
+below `OpenScad/`, and every mesh path is `../../STL/...` relative to it. Keep that layout, or
+OpenSCAD will show an empty view (missing files only give a warning in the console).
 
 ## Design approach
 
@@ -70,8 +79,8 @@ The shoulder pitch housing also fits any 40×20 mm servo up to 48 mm tall, if yo
 
 ## Printing and assembly
 
-1. **Export the parts.** Open each file in `parts_left/`, `parts_right/`, `parts_torso/` and
-   `hardware/`, then press F6 and export the STL. Use OpenSCAD 2024+ with the Manifold backend
+1. **Export the parts.** Open each file in `OpenScad/parts_left/`, `parts_right/`, `parts_torso/`,
+   `hardware/` and `torso_frame/`, then press F6 and export the STL. Use OpenSCAD 2024+ with the Manifold backend
    (Preferences → Features → manifold).
 2. **Check your servos.** Measure the shaft offset, horn diameter and horn height on the servos you
    bought and compare them with `SERVO` in `generator/design.py`. If they differ, run

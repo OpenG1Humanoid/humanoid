@@ -94,15 +94,15 @@ the waist actuator is designed.
 
 ## Files
 - `torso_frame.scad`: frame + printed parts. `PART = "assembly" | "exploded" | "frame" | <part name>`.
-  `assembly.scad` now uses it (`torso_style = "framed"`); set `"solid"` for the old one-piece torso.
-- `stl/`: printed parts, in mm, in the torso_link frame (place them as they are in the assembly).
+  `../assembly/assembly.scad` uses it (through `../lib/torso_frame_lib.scad`) (`torso_style = "framed"`); set `"solid"` for the old one-piece torso.
+- `../../STL/torso_frame/`: printed parts, in mm, in the torso_link frame (place them as they are in the assembly).
 - `generator/`: change `layout.py` (every dimension above), then run from that folder:
   ```bash
   export G1_HEAD_STL=/path/to/unitree/head_link.STL     # the stock collar becomes the head socket
   python env.py 0.5 && python gen_torso.py && python outer_sdf.py && python export.py && python mass.py && python make_scad.py && python check.py
   ```
-  It takes about 7 minutes and needs about 6 GB of RAM. It reads `../../stl/torso/` and `../../generator/design.py`.
+  It takes about 7 minutes and needs about 6 GB of RAM. It reads `STL/torso/` and `OpenScad/generator/design.py`, and writes `STL/torso_frame/` and the two torso frame .scad files.
 - `checks.json`: the clearance, overlap, removal and surface-accuracy results above.
-- `../head/head.scad`: your head with the 4 neck insert holes added (the only change).
+- `../head/head.scad`: your head with the 4 neck insert holes added.
 - **Not done here:** OpenSCAD isn't installed, so render `torso_frame.scad` once before relying on it.
   No stress analysis was done.

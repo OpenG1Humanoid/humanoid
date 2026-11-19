@@ -4,8 +4,8 @@
 //  Manifold backend (Preferences > Features > manifold) for F6.
 //  Joint angles in degrees: [shoulder pitch, roll, yaw, elbow, wrist roll, pitch, yaw]
 // =====================================================================
-include <g1_servo_arm.scad>
-use <torso_frame/torso_frame.scad>   // framed torso (2020 aluminium + printed panels)
+include <../lib/g1_servo_arm.scad>
+include <../lib/torso_frame_lib.scad>   // framed torso (2020 aluminium + printed panels)
 part = "none";                      // stop g1_servo_arm.scad drawing a single part
 qL = [0, 0, 0, 0, 0, 0, 0];         // left arm
 qR = [0, 0, 0, 0, 0, 0, 0];         // right arm

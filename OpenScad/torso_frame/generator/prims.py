@@ -4,9 +4,9 @@ import numpy as np
 from scipy import ndimage
 HERE = os.path.dirname(os.path.abspath(__file__))
 TF = os.path.dirname(HERE)                    # torso_frame/
-PKG = os.path.dirname(TF)                     # package root (assembly.scad, generator/, stl/)
+PKG = os.path.dirname(os.path.dirname(TF))    # repo root (OpenScad/, STL/)
 WORK = os.path.join(HERE, 'work'); os.makedirs(WORK, exist_ok=True)
-sys.path.insert(0, os.path.join(PKG, 'generator'))
+sys.path.insert(0, os.path.join(PKG, 'OpenScad', 'generator'))
 import design as D                            # arm/torso servo features (shoulder pitch pockets + hatches)
 
 def load(p):
@@ -20,7 +20,7 @@ def load(p):
 
 def torso_tris():
     """original torso_link_rev_1_0, split into its bodies (stl/torso, metres) -> mm"""
-    return np.vstack([load(os.path.join(PKG, 'stl', 'torso', b))*1000 for b in D.TORSO_BODIES])
+    return np.vstack([load(os.path.join(PKG, 'STL', 'torso', b))*1000 for b in D.TORSO_BODIES])
 
 def occupancy(T, lo, hi, h):
     """winding-number occupancy of triangle soup T (mm), sampled at lo + h*(i+0.5)"""
@@ -66,8 +66,8 @@ def prim_mask(P, M, prim):
     raise ValueError(k)
 
 def head_stl():
-    p = os.environ.get('G1_HEAD_STL', os.path.join(PKG, 'stl', 'head_link.STL'))
+    p = os.environ.get('G1_HEAD_STL', os.path.join(PKG, 'STL', 'head', 'head_link.STL'))
     if not os.path.isfile(p):
         raise SystemExit("Need Unitree's head_link.STL (the stock collar becomes the head socket): "
-                         "set G1_HEAD_STL=/path/to/head_link.STL or copy it to stl/head_link.STL")
+                         "set G1_HEAD_STL=/path/to/head_link.STL or copy it to STL/head/head_link.STL")
     return p

@@ -80,5 +80,9 @@ else if (PART == "exploded") torso_framed(EXPLODE);
 else if (PART == "frame") color("LightSteelBlue") frame();
 else printed(PART);
 '''
-open(os.path.join(TF, 'torso_frame.scad'), 'w').write(S)
+cut = S.index('if (PART == "assembly")')
+lib = S[:cut].replace('module printed(name) import(str("stl/", name, ".stl"), convexity = 10);',
+    'torso_frame_stl_dir = "../../STL/torso_frame/";   // relative to the file you open\nmodule printed(name) import(str(torso_frame_stl_dir, name, ".stl"), convexity = 10);').replace('PART      = "assembly";\n', '')
+open(os.path.join(os.path.dirname(TF), 'lib', 'torso_frame_lib.scad'), 'w').write(lib)
+open(os.path.join(TF, 'torso_frame.scad'), 'w').write('include <../lib/torso_frame_lib.scad>\nPART = "assembly";\n\n' + S[cut:])
 print(len(S.splitlines()), 'lines')

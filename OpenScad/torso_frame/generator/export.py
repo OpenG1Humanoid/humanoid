@@ -5,7 +5,7 @@ from voxmesh import write_stl
 from prims import WORK, TF
 d=np.load(os.path.join(WORK,'parts_0.5.npz')); lo=d['lo']; h=float(d['h'])
 E=np.load(os.path.join(WORK,'E_0.5.npz'))['E']; SO=np.load(os.path.join(WORK,'outer_sdf.npy'))
-OUT=os.path.join(TF,'stl')
+OUT=os.path.join(os.path.dirname(os.path.dirname(TF)),'STL','torso_frame')
 SIG=0.7; K=1/(np.sqrt(2*np.pi)*SIG)          # slope of a gaussian-smoothed step, per voxel
 def g_of(mask):
     # signed distance (mm, + outside) of a voxel set, boundary half-way between voxels, lightly smoothed

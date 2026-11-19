@@ -31,7 +31,7 @@ BROW_POP  = [0, 0];     // preview: [left, right] travel in mm (0 = flush, BROW_
 SHOW_SERVOS = true;     // ghost SG90s in assembly previews
 EXPLODE = 40;           // mm, for "exploded"
 
-STOCK_STL = "stock/head_link.STL";   // Unitree's head_link.STL (metres)
+STOCK_STL = "../../STL/head/head_link.STL";   // Unitree's head_link.STL (metres): put it in STL/head/
 
 $fn = 160;              // drop to ~64 while editing
 

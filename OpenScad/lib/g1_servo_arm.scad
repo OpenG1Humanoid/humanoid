@@ -10,17 +10,20 @@
 side = "left";            // [left, right]
 $side = side;             // modules read $side, so assembly.scad can place a left AND a right arm
 part = "shoulder_pitch_link"; // see the PART LIST at the bottom
-stl_dir = "stl/";
+// Mesh folders, relative to the file you open. Every file you open sits one folder below
+// OpenScad/ (like this library), so the same path works for all of them.
+arm_stl_dir   = "../../STL/arms/";
+torso_stl_dir = "../../STL/torso/";
 $fn = 48;
 
 module mesh(link) {
-    f = (link == "shoulder_roll_link") ? str(stl_dir, $side, "_shoulder_roll_link_fixed.stl")
-                                        : str(stl_dir, $side, "_", link, ".STL");
+    f = (link == "shoulder_roll_link") ? str(arm_stl_dir, $side, "_shoulder_roll_link_fixed.stl")
+                                        : str(arm_stl_dir, $side, "_", link, ".STL");
     if ($side == "left") scale(1000) import(f, convexity=10);
     else mirror([0,1,0]) scale(1000) import(f, convexity=10);
 }
 module hand_trimmed() {   // rubber hand, wrist section removed, placed in the wrist_yaw frame
-    f = str(stl_dir, $side, "_hand_clean.stl");
+    f = str(arm_stl_dir, $side, "_hand_clean.stl");
     translate([-84,0,0]) intersection() {
         if ($side == "left") scale(1000) import(f, convexity=10); else mirror([0,1,0]) scale(1000) import(f, convexity=10);
         translate([123.0000,-200,-200]) cube(400);
@@ -29,9 +32,9 @@ module hand_trimmed() {   // rubber hand, wrist section removed, placed in the w
 torso_mesh_source = "original";   // [original, voxel]  voxel = clean 1.5 mm remesh of the main torso shell
 module torso_mesh() {   // your torso_link_rev_1_0.STL, split into its separate bodies (original triangles) and re-joined
     union() {
-        if (torso_mesh_source == "voxel") import(str(stl_dir, "torso/torso_body00_voxel_mm.stl"), convexity=10);
-        else scale(1000) import(str(stl_dir, "torso/torso_body00.stl"), convexity=10);
-        for (k=[1:13]) scale(1000) import(str(stl_dir, "torso/torso_body", k<10 ? "0" : "", k, ".stl"), convexity=10);
+        if (torso_mesh_source == "voxel") import(str(torso_stl_dir, "torso_body00_voxel_mm.stl"), convexity=10);
+        else scale(1000) import(str(torso_stl_dir, "torso_body00.stl"), convexity=10);
+        for (k=[1:13]) scale(1000) import(str(torso_stl_dir, "torso_body", k<10 ? "0" : "", k, ".stl"), convexity=10);
     }
 }
 module body(link) {
