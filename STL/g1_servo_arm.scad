@@ -8,20 +8,21 @@
 //  STLs, mirrored into the left frame, and the finished part is mirrored back.
 // =====================================================================
 side = "left";            // [left, right]
+$side = side;             // modules read $side, so assembly.scad can place a left AND a right arm
 part = "shoulder_pitch_link"; // see the PART LIST at the bottom
 stl_dir = "stl/";
 $fn = 48;
 
 module mesh(link) {
-    f = (link == "shoulder_roll_link") ? str(stl_dir, side, "_shoulder_roll_link_fixed.stl")
-                                        : str(stl_dir, side, "_", link, ".STL");
-    if (side == "left") scale(1000) import(f, convexity=10);
+    f = (link == "shoulder_roll_link") ? str(stl_dir, $side, "_shoulder_roll_link_fixed.stl")
+                                        : str(stl_dir, $side, "_", link, ".STL");
+    if ($side == "left") scale(1000) import(f, convexity=10);
     else mirror([0,1,0]) scale(1000) import(f, convexity=10);
 }
 module hand_trimmed() {   // rubber hand, wrist section removed, placed in the wrist_yaw frame
-    f = str(stl_dir, side, "_hand_clean.stl");
+    f = str(stl_dir, $side, "_hand_clean.stl");
     translate([-84,0,0]) intersection() {
-        if (side == "left") scale(1000) import(f, convexity=10); else mirror([0,1,0]) scale(1000) import(f, convexity=10);
+        if ($side == "left") scale(1000) import(f, convexity=10); else mirror([0,1,0]) scale(1000) import(f, convexity=10);
         translate([123.0000,-200,-200]) cube(400);
     }
 }

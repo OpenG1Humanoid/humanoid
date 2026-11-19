@@ -5,10 +5,12 @@
 //  Joint angles in degrees: [shoulder pitch, roll, yaw, elbow, wrist roll, pitch, yaw]
 // =====================================================================
 include <g1_servo_arm.scad>
+use <torso_frame/torso_frame.scad>   // framed torso (2020 aluminium + printed panels)
 part = "none";                      // stop g1_servo_arm.scad drawing a single part
 qL = [0, 0, 0, 0, 0, 0, 0];         // left arm
 qR = [0, 0, 0, 0, 0, 0, 0];         // right arm
 show_torso    = true;
+torso_style   = "framed";           // "framed": 2020 frame + printable panels | "solid": one-piece printed torso
 show_left     = true;
 show_right    = true;
 show_hardware = true;               // printed hubs and idler pins (gold)
@@ -41,7 +43,8 @@ module arm(q) {
 }
 
 if (show_torso) {
-    color("Gainsboro") { torso_link_main(); torso_link_plug_pitchL(); torso_link_plug_pitchR(); }
+    if (torso_style == "framed") torso_framed();
+    else color("Gainsboro") { torso_link_main(); torso_link_plug_pitchL(); torso_link_plug_pitchR(); }
     if (show_hardware) color("Gold") { multmatrix([[-0.0000,-1.0000,-0.0002,3.9562],[-0.2757,0.0002,-0.9612,99.6433],[0.9612,0.0001,-0.2757,247.6146],[0.0000,0.0000,0.0000,1.0000]]) hub_DS3235(); multmatrix([[0.0000,-1.0000,-0.0002,3.9562],[-0.2757,-0.0002,0.9612,-99.6433],[-0.9612,0.0001,-0.2757,247.6146],[0.0000,0.0000,0.0000,1.0000]]) hub_DS3235(); }
 }
 if (show_left)  multmatrix([[1.0000,0.0002,-0.0000,3.9563],[-0.0002,0.9612,-0.2757,100.2200],[-0.0001,0.2757,0.9612,247.7800],[0.0000,0.0000,0.0000,1.0000]]) { $side = "left";  arm(qL); }

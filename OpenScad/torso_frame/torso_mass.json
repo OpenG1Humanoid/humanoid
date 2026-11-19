@@ -1,0 +1,43 @@
+{
+ "mass": 2.026650037500001,
+ "com": [
+  0.0016474823221143092,
+  0.0007937976147127456,
+  0.15777230826376562
+ ],
+ "I": [
+  [
+   0.018724263324011475,
+   -2.958009263421213e-05,
+   0.0002762212123371616
+  ],
+  [
+   -2.958009263421213e-05,
+   0.01494580656198177,
+   -5.299748189335937e-07
+  ],
+  [
+   0.0002762212123371616,
+   -5.299748189335937e-07,
+   0.010039296324227774
+  ]
+ ],
+ "printed_kg": {
+  "front_panel": 0.2227,
+  "back_panel": 0.2193,
+  "top_panel": 0.089,
+  "shoulder_block_L": 0.1376,
+  "hatch_L": 0.0161,
+  "shoulder_block_R": 0.1372,
+  "hatch_R": 0.0161,
+  "bottom_plate": 0.0955,
+  "compute_tray": 0.0546,
+  "driver_tray": 0.0595
+ },
+ "printed_total_kg": 1.0476500375000002,
+ "aluminium_m": 1.218,
+ "aluminium_kg": 0.609,
+ "servos_kg": 0.12,
+ "fasteners_kg": 0.25,
+ "note": "framed torso: printed parts at 1.1 g/cm3, 2020 at 0.5 kg/m, 2x DS3235, fasteners/brackets 0.25 kg. Electronics NOT included."
+}
