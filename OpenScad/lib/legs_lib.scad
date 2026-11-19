@@ -40,11 +40,21 @@ module leg_actuator() {
     color("#5b8c5a") for (f = ["Output_-_Bambu_-_Output_Shaft_Front", "Output_-_Bambu_-_Output_Shaft_Rear"]) leg_stl(str("actuator/", f));
 }
 
+// waist yaw: the same actuator in the pelvis top, output face up at z = 2.2 (pelvis frame)
+LEG_WAIST_ACT = leg_T([0, 0, 2.2]);
+
 module pelvis() {
-    color("#b8b8b8") leg_stl("pelvis_left_half_integrated");
-    color("#8f9bb0") leg_stl("pelvis_right_half_integrated");
-    if (show_leg_actuators) { multmatrix(LEG_PEL_L) leg_actuator(); multmatrix(LEG_PEL_R) leg_actuator(); }
+    color("#b8b8b8") leg_stl("pelvis_left_half_waist");
+    color("#8f9bb0") leg_stl("pelvis_right_half_waist");
+    color("#e0c060") leg_stl("waist_stator_carrier");
+    if (show_leg_actuators) {
+        multmatrix(LEG_PEL_L) leg_actuator(); multmatrix(LEG_PEL_R) leg_actuator();
+        multmatrix(LEG_WAIST_ACT) leg_actuator();
+    }
 }
+
+// waist yaw link (turns with the torso), in the pelvis frame at zero yaw
+module waist_yaw_link() color("#9fb4c8") leg_stl("waist_yaw_link_integrated");
 
 // one leg, in the pelvis frame. side = "left" | "right", q = [hip_pitch, hip_roll, hip_yaw, knee] (deg)
 module leg(side, q = [0, 0, 0, 0]) {
@@ -67,3 +77,12 @@ module legs(qLeft = [0, 0, 0, 0], qRight = [0, 0, 0, 0]) { pelvis(); leg("left",
 
 // pelvis frame inside the torso_link frame at zero waist angles (G1 rev 1.0 waist)
 LEG_PELVIS_IN_TORSO = leg_T([3.9635, 0, -44]);
+
+// everything below the torso, drawn in the torso_link frame. qWaist = waist yaw (deg, G1 sign):
+// the torso turns by +qWaist about the pelvis z axis, so the pelvis turns by -qWaist under it.
+module lower_body(qLeft = [0, 0, 0, 0], qRight = [0, 0, 0, 0], qWaist = 0) {
+    multmatrix(LEG_PELVIS_IN_TORSO) {
+        waist_yaw_link();
+        multmatrix(leg_Rz(-qWaist)) legs(qLeft, qRight);
+    }
+}

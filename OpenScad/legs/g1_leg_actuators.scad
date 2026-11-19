@@ -25,7 +25,7 @@
 // Everything else can be changed here. To change SCALE, rerun integrate_leg.py at the new
 // scale and copy its params.json values into that block.
 
-part = "assembly"; // [assembly, pelvis_left_half, pelvis_right_half, hip_pitch_link, hip_roll_link, thigh, shin]
+part = "assembly"; // [assembly, pelvis_left_half, pelvis_right_half, hip_pitch_link, hip_roll_link, thigh, shin, waist_yaw_link, waist_stator_carrier]
 side = "left";     // [left, right] for hip_pitch_link, hip_roll_link, thigh and shin
 show_actuators = true;   // assembly view only: place the actuator housings and outputs
 both_legs = true;        // assembly view: add the right leg (mirror of the left)
@@ -48,8 +48,8 @@ CBORE_D      = 6.5;      // counterbore and hex-key bore
 BOSS_T       = 4.0;      // boss material under the bolt heads
 WINDOW_H     = 20.0;     // thigh access window chamber height
 WINDOW_R     = 18 + CBORE_D / 2 + 1.5;
-JOIN_BOLTS   = [[38, -80], [-38, -62], [20, -38], [-20, -38]];   // pelvis halves, (x, z) at 1:1
-JOIN_DOWELS  = [[30, -50], [-30, -50]];
+JOIN_BOLTS   = [[38, -80], [-38, -62], [40, -40], [-40, -40]];   // pelvis halves, (x, z) at 1:1
+JOIN_DOWELS  = [[41, -52], [-41, -52]];   // the old [+-20,-38] bolts and [+-30,-50] dowels sat in the waist pocket
 BOLT_GRIP    = 6.0;      // right-half material under each joining bolt head (M3x12 into an insert)
 DOWEL_HOLE   = 4.1;      // for 4 mm dowel pins
 DOWEL_DEPTH  = 6.0;      // each side
@@ -75,6 +75,23 @@ R_CLEAR_ROLL   = 48 * SCALE;   // how far out each child link is cut back at the
 R_CLEAR_YAW    = 56 * SCALE;
 R_CLEAR_KNEE   = 41 * SCALE;
 
+// ---------------- waist yaw (same 6512 actuator, stator in the pelvis top) ----------------
+WAIST_FACE      = 2.2;     // output face = pelvis top face, output facing +z
+WAIST_CAVITY_R  = 21;      // wire space under the stator carrier
+WAIST_CAVITY_D  = 5;
+WAIST_CHANNEL_W = 12;      // wire channel from that space out to the front of the pelvis
+CARRIER_R       = 29.0;    // drop-in stator carrier (motor-shell floor + outer ring)
+CARRIER_RING_IN = 25.6;
+CARRIER_SCREW_R = 25.5;    // 4 x M3 countersunk on the floor spokes (45, 135, 225, 315 deg)
+M3_CSK          = 6.6;
+WAIST_DISC_TOP  = 15.4;    // top of the G1 waist yaw disc (roll/pitch lugs above it are dropped)
+WAIST_RISER_R   = 35;      // riser from the disc up to the torso bottom plate
+WAIST_RISER_HOLE_R = 12;
+WAIST_PLATE_Z   = 73.0;    // torso bottom plate underside, pelvis frame, zero waist angles
+WAIST_PLATE_PCD_R  = 25;   // 6 x M4 heat-set inserts for the torso plate, at 30 + 60k deg
+WAIST_PLATE_INSERT_D = 5.6;
+WAIST_PLATE_INSERT_L = 8;
+
 // ---------------- frames ----------------
 function T(v) = [[1, 0, 0, v[0]], [0, 1, 0, v[1]], [0, 0, 1, v[2]], [0, 0, 0, 1]];
 function Ry(a) = [[cos(a), 0, sin(a), 0], [0, 1, 0, 0], [-sin(a), 0, cos(a), 0], [0, 0, 0, 1]];
@@ -99,6 +116,7 @@ PEL_R    = [[-1, 0, 0, 0], [0, 0, -1, -J_PITCH[1][3]], [0, -1, 0, J_PITCH[2][3]]
 ROLL_ACT = J_ROLL * T([D_ROLL, 0, 0]) * AZ_TO_X * Rz(ROLL_CLOCK);
 YAW_ACT  = J_YAW * T([0, 0, -D_YAW]) * AZ_TO_NZ;
 KNEE_ACT = J_KNEE * T([0, D_KNEE, 0]) * AZ_TO_Y;
+WAIST_ACT = T([0, 0, WAIST_FACE]);
 
 // ---------------- primitives (actuator frame) ----------------
 module zcyl(r, z0, z1, fn = FN_BIG) { translate([0, 0, z0]) cylinder(r = r, h = z1 - z0, $fn = fn); }
@@ -165,6 +183,52 @@ module with_output(M, r_clear, zboss, clock, window = false, slab = false) {
 
 module stock(name) { scale(SCALE) import(str(STOCK_DIR, name, ".stl")); }
 
+module waist_cut() {                    // actuator frame: rings, bay, inserts, carrier seat, wire channel
+    stator_cut(0);
+    zcyl(WAIST_CAVITY_R, Z_FLOOR - WAIST_CAVITY_D, Z_FLOOR + 0.01);
+    for (a = [45 : 90 : 315]) rotate([0, 0, a]) translate([CARRIER_SCREW_R, 0, 0])
+        zcyl(INSERT_D / 2, Z_FLOOR - 6, Z_FLOOR + 0.01, FN_SMALL);
+    box([0, -WAIST_CHANNEL_W / 2, Z_FLOOR - WAIST_CAVITY_D], [120, WAIST_CHANNEL_W / 2, Z_FLOOR]);
+}
+module waist_sleeve() {
+    zcyl(35 + RING_CLEAR + WALL_MIN, Z_RINGS, 0);
+    zcyl(BAY_R + WALL_MIN, Z_FLOOR - WAIST_CAVITY_D - WALL_MIN, Z_RINGS);
+}
+
+module waist_stator_carrier() {         // pelvis frame. Screw the stator to it on the bench, drop it in
+    multmatrix(WAIST_ACT) translate([0, 0, Z_RINGS]) difference() {
+        union() {
+            intersection() { import(str(ACTUATOR_DIR, "Motor_Shell_-_Motor_Shell.stl")); zcyl(CARRIER_R, -32.01, -25.99); }
+            difference() { zcyl(CARRIER_R, -32, -26); zcyl(CARRIER_RING_IN, -33, -25); }
+        }
+        for (a = [45 : 90 : 315]) rotate([0, 0, a]) translate([CARRIER_SCREW_R, 0, 0]) {
+            zcyl(M3_CLEAR / 2, -33, -25, FN_SMALL);
+            translate([0, 0, -26 - (M3_CSK - M3_CLEAR) / 2])
+                cylinder(r1 = M3_CLEAR / 2, r2 = M3_CSK / 2, h = (M3_CSK - M3_CLEAR) / 2 + 0.01, $fn = FN_SMALL);
+            zcyl(M3_CSK / 2, -26, -25, FN_SMALL);
+        }
+    }
+}
+
+module waist_yaw_link() {               // pelvis frame at zero yaw: bolts to the waist output, carries the torso
+    difference() {
+        union() {
+            difference() {
+                union() {
+                    intersection() { stock("waist_yaw_link_rev_1_0"); zcyl(50, -10, WAIST_DISC_TOP); }
+                    zcyl(WAIST_RISER_R, WAIST_DISC_TOP - 1, WAIST_PLATE_Z);
+                }
+                zcyl(200, -50, WAIST_FACE + LINK_GAP);
+                zcyl(WAIST_RISER_HOLE_R, WAIST_DISC_TOP + 3, WAIST_PLATE_Z + 1);
+            }
+            multmatrix(WAIST_ACT) zcyl(BOSS_R, 0, LINK_GAP + 1);
+        }
+        multmatrix(WAIST_ACT) bolt_cutter(0, 0);        // 6 x M3 to the output, hex-key bores up through the riser
+        for (k = [0 : 5]) rotate([0, 0, 30 + 60 * k]) translate([WAIST_PLATE_PCD_R, 0, 0])
+            zcyl(WAIST_PLATE_INSERT_D / 2, WAIST_PLATE_Z - WAIST_PLATE_INSERT_L, WAIST_PLATE_Z + 1, FN_SMALL);
+    }
+}
+
 // ---------------- parts ----------------
 Y_FLOOR = J_PITCH[1][3] + Z_FLOOR;     // back face of each hip pitch stator floor
 ZC      = J_PITCH[2][3];
@@ -172,9 +236,10 @@ ZC      = J_PITCH[2][3];
 module pelvis_body() {
     union() {
         difference() {
-            union() { stock("pelvis"); multmatrix(PEL_L) sleeve(); multmatrix(PEL_R) sleeve(); }
+            union() { stock("pelvis"); multmatrix(PEL_L) sleeve(); multmatrix(PEL_R) sleeve(); multmatrix(WAIST_ACT) waist_sleeve(); }
             multmatrix(PEL_L) stator_cut(0);
             multmatrix(PEL_R) stator_cut(0);
+            multmatrix(WAIST_ACT) waist_cut();
             ycyl(0, ZC, CAVITY_R, -Y_FLOOR, Y_FLOOR);                                        // recess behind both floors
             box([-500, -Y_FLOOR, ZC - HATCH_HALF_H], [0, Y_FLOOR, ZC + HATCH_HALF_H]);       // wiring slot out the back
         }
@@ -235,9 +300,12 @@ module assembly() {
     color("#8f9bb0") pelvis_right_half();
     left_leg_assembly();
     if (both_legs) mirror([0, 1, 0]) left_leg_assembly();   // right leg = mirror of the left (zero pose)
+    color("#e0c060") waist_stator_carrier();
+    color("#9fb4c8") waist_yaw_link();
     if (show_actuators) {
         multmatrix(PEL_L) actuator();
         multmatrix(PEL_R) actuator();
+        multmatrix(WAIST_ACT) actuator();
     }
 }
 
@@ -260,3 +328,5 @@ else if (part == "hip_pitch_link") sided() hip_pitch_link();
 else if (part == "hip_roll_link") sided() hip_roll_link();
 else if (part == "thigh") sided() thigh();
 else if (part == "shin") sided() shin();
+else if (part == "waist_yaw_link") waist_yaw_link();
+else if (part == "waist_stator_carrier") waist_stator_carrier();

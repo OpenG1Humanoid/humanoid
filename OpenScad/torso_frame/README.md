@@ -81,9 +81,10 @@ into the extrusion core). The upper-left front screw sits 1.8 mm below the surfa
    the back and front panels.
 
 ## Waist
-The plate underside has a **placeholder** waist interface: 6 × Ø4.5 holes on a 60 mm circle and a
-Ø26 mm cable hole, centred under the waist pitch axis. Change `WAIST_*` in `generator/layout.py` once
-the waist actuator is designed.
+The plate sits on the waist yaw link riser (`../legs/waist/`, and `../legs/README.md` for the
+joint). It takes 6 × M4 × 14 into heat-set inserts in the riser top, on a 50 mm circle centred on
+the G1 waist yaw axis (torso x = +3.96 mm). Two Ø14 holes at y = ±48 mm take the torso-to-pelvis
+cables past the riser.
 
 ## Printing
 - **Material:** PETG or PLA+.

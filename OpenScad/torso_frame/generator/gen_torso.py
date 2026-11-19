@@ -182,8 +182,10 @@ for xc in (L.XF, L.XB):
         plate &= ~cone(2, c, -1, 0, L.M5['head']/2, L.M5['clr']/2, 3.0)     # countersunk from below into the tapped post ends
 for i in range(L.WAIST_N):
     a = 2*np.pi*i/L.WAIST_N + np.pi/L.WAIST_N
-    plate &= ~cyl(2, (L.WAIST_PCD/2*np.cos(a), L.WAIST_PCD/2*np.sin(a), L.Z_PLATE[0]), L.WAIST_HOLE/2, -1, 10, 1)
-plate &= ~cyl(2, (0, 0, L.Z_PLATE[0]), L.PLATE_CABLE_HOLE/2, -1, 10, 1)
+    plate &= ~cyl(2, (L.WAIST_X + L.WAIST_PCD/2*np.cos(a), L.WAIST_PCD/2*np.sin(a), L.Z_PLATE[0]), L.WAIST_HOLE/2, -1, 10, 1)
+plate &= ~cyl(2, (L.WAIST_X, 0, L.Z_PLATE[0]), L.PLATE_CABLE_HOLE/2, -1, 10, 1)
+for (wx, wy) in L.PLATE_WIRE_HOLES:
+    plate &= ~cyl(2, (wx, wy, L.Z_PLATE[0]), L.PLATE_WIRE_HOLE/2, -1, 10, 1)
 zp = sum(L.Z_PLATE)/2
 for part, p, ax3, size in L.PANEL_SCREWS:
     if size == 'M3':

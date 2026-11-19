@@ -1,0 +1,19 @@
+{
+ "pelvis_left": {
+  "triangles": 454938,
+  "volume_cm3": 394.0
+ },
+ "pelvis_right": {
+  "triangles": 484766,
+  "volume_cm3": 387.8
+ },
+ "waist_stator_carrier": {
+  "triangles": 261052,
+  "volume_cm3": 9.19
+ },
+ "waist_yaw_link": {
+  "triangles": 279828,
+  "volume_cm3": 248.0,
+  "disc_top_z": 15.399999999999999
+ }
+}

@@ -16,13 +16,13 @@ for the G1 (pose copying, teleoperation, RL) carry over.
 
 ```
 OpenScad/
-  assembly/assembly.scad   # the whole robot: legs, torso, both arms, posable (qL / qR / qLegL / qLegR)
+  assembly/assembly.scad   # the whole robot: legs, waist, torso, both arms, posable (qL / qR / qLegL / qLegR / qWaist)
   parts_left/ parts_right/ # one file per printable arm part per side: open, F6, export STL
   parts_torso/             # one-piece torso + its two shoulder hatches (old torso)
   torso_frame/             # torso on a 2020 aluminium frame: torso_frame.scad, README, generator/
   hardware/                # printed hubs and idler pins
   head/head.scad           # dome head with the RealSense D455
-  legs/                    # pelvis + both legs with 6512 cycloidal actuators: legs.scad, parametric .scad, mirror_right.py
+  legs/                    # pelvis, both legs and the waist yaw joint (6512 cycloidal actuators): legs.scad, parametric .scad, waist/
   lib/                     # g1_servo_arm.scad, torso_frame_lib.scad, legs_lib.scad (included by the files above)
 STL/
   arms/                    # G1 arm link STLs, fixed shoulder roll link, cleaned rubber hands
@@ -53,6 +53,7 @@ OpenSCAD will show an empty view (missing files only give a warning in the conso
 | Joint | Actuator | Stall torque | Fits inside |
 |---|---|---|---|
 | Hips, knees, ankles | Printed cycloidal actuators (Berkeley-Humanoid style) | – | leg links |
+| Waist yaw | The same 6512 cycloidal actuator | – | pelvis top |
 | Shoulder pitch | DS3235 (40×20×38.5 mm) | 35 kg·cm @ 7.4 V | torso shoulder housing |
 | Shoulder roll | DS3235 | 35 kg·cm | shoulder pitch link |
 | Shoulder yaw | KST X10 Pro (30×10×33.5 mm) | 11.5 kg·cm | shoulder roll link |
@@ -116,7 +117,7 @@ It also has a Gymnasium environment (`OpenG1-Stand-v0`).
 - [x] MuJoCo model + Gymnasium environment
 - [ ] OpenSCAD render check of every part (please report any errors)
 - [ ] Leg actuator integration (Berkeley-style printed actuators) + measured leg parameters in the sim
-- [ ] Waist actuators (the G1 waist linkage parts are included, unmodified)
+- [x] Waist yaw actuator (same 6512 as the legs; the 23-DoF waist roll/pitch are locked)
 - [ ] Cable routing between links
 
 ## Credits

@@ -53,9 +53,13 @@ TRAY_Z = (84.0, 198.0)
 COMPUTE_X = XB + h                     # tray back face on the back posts' front faces
 DRIVER_X = XF - h                      # tray front face on the front posts' back faces
 TRAY_SCREWS_Z = (92.0, 190.0)
-# waist interface on the plate underside (placeholder until the waist actuator is designed)
-WAIST_PCD, WAIST_N, WAIST_HOLE = 60.0, 6, 4.5
-PLATE_CABLE_HOLE = 26.0
+# waist interface: the plate sits on the waist yaw link riser (OpenScad/legs/waist). 6 x M4 into heat-set
+# inserts in the riser top, on the G1 waist yaw axis (pelvis z axis = torso x +3.9635)
+WAIST_X = 3.9635
+WAIST_PCD, WAIST_N, WAIST_HOLE = 50.0, 6, 4.5
+PLATE_CABLE_HOLE = 24.0                  # on the axis, over the riser's centre hole
+PLATE_WIRE_HOLES = [(WAIST_X, 48.0), (WAIST_X, -48.0)]   # torso <-> pelvis wiring, outside the riser
+PLATE_WIRE_HOLE = 14.0
 
 
 def members():

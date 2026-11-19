@@ -155,7 +155,8 @@ A=f"""// =====================================================================
 //  F5 (preview) is quick; F6 (full render) of everything is slow - use the
 //  Manifold backend (Preferences > Features > manifold) for F6.
 //  Joint angles in degrees: arms [shoulder pitch, roll, yaw, elbow, wrist roll, pitch, yaw],
-//  legs [hip pitch, hip roll, hip yaw, knee] (G1 URDF convention, both sides). Frame: torso_link.
+//  legs [hip pitch, hip roll, hip yaw, knee] (G1 URDF convention, both sides), waist yaw.
+//  Frame: torso_link.
 // =====================================================================
 include <../lib/g1_servo_arm.scad>
 include <../lib/torso_frame_lib.scad>   // framed torso (2020 aluminium + printed panels)
@@ -165,6 +166,7 @@ qL = [0, 0, 0, 0, 0, 0, 0];         // left arm
 qR = [0, 0, 0, 0, 0, 0, 0];         // right arm
 qLegL = [0, 0, 0, 0];               // left leg
 qLegR = [0, 0, 0, 0];               // right leg
+qWaist = 0;                         // waist yaw (deg)
 show_legs     = true;
 show_torso    = true;
 torso_style   = "framed";           // "framed": 2020 frame + printable panels | "solid": one-piece printed torso
@@ -206,7 +208,7 @@ if (show_torso) {{
 }}
 if (show_left)  {M2s(D.T_TORSO_L)} {{ $side = "left";  arm(qL); }}
 if (show_right) {M2s(D.T_TORSO_R)} {{ $side = "right"; arm(qR); }}
-if (show_legs)  multmatrix(LEG_PELVIS_IN_TORSO) legs(qLegL, qLegR);   // waist joints at zero
+if (show_legs)  lower_body(qLegL, qLegR, qWaist);   // pelvis, legs, waist yaw link
 """
 open("../assembly/assembly.scad","w").write(A)
 open("parts.txt","w").write("\n".join(parts+hw))
