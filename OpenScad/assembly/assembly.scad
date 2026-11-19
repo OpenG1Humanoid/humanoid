@@ -1,14 +1,19 @@
 // =====================================================================
-//  assembly.scad - torso + both 7-DoF servo arms, all in one (generated)
+//  assembly.scad - the whole robot: pelvis + legs, torso, both 7-DoF servo arms (generated)
 //  F5 (preview) is quick; F6 (full render) of everything is slow - use the
 //  Manifold backend (Preferences > Features > manifold) for F6.
-//  Joint angles in degrees: [shoulder pitch, roll, yaw, elbow, wrist roll, pitch, yaw]
+//  Joint angles in degrees: arms [shoulder pitch, roll, yaw, elbow, wrist roll, pitch, yaw],
+//  legs [hip pitch, hip roll, hip yaw, knee] (G1 URDF convention, both sides). Frame: torso_link.
 // =====================================================================
 include <../lib/g1_servo_arm.scad>
 include <../lib/torso_frame_lib.scad>   // framed torso (2020 aluminium + printed panels)
+include <../lib/legs_lib.scad>          // pelvis + legs with the 6512 cycloidal actuators
 part = "none";                      // stop g1_servo_arm.scad drawing a single part
 qL = [0, 0, 0, 0, 0, 0, 0];         // left arm
 qR = [0, 0, 0, 0, 0, 0, 0];         // right arm
+qLegL = [0, 0, 0, 0];               // left leg
+qLegR = [0, 0, 0, 0];               // right leg
+show_legs     = true;
 show_torso    = true;
 torso_style   = "framed";           // "framed": 2020 frame + printable panels | "solid": one-piece printed torso
 show_left     = true;
@@ -49,3 +54,4 @@ if (show_torso) {
 }
 if (show_left)  multmatrix([[1.0000,0.0002,-0.0000,3.9563],[-0.0002,0.9612,-0.2757,100.2200],[-0.0001,0.2757,0.9612,247.7800],[0.0000,0.0000,0.0000,1.0000]]) { $side = "left";  arm(qL); }
 if (show_right) multmatrix([[1.0000,-0.0002,-0.0000,3.9563],[0.0002,0.9612,0.2757,-100.2200],[-0.0001,-0.2757,0.9612,247.7800],[0.0000,0.0000,0.0000,1.0000]]) { $side = "right"; arm(qR); }
+if (show_legs)  multmatrix(LEG_PELVIS_IN_TORSO) legs(qLegL, qLegR);   // waist joints at zero

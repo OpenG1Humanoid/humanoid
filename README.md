@@ -16,18 +16,20 @@ for the G1 (pose copying, teleoperation, RL) carry over.
 
 ```
 OpenScad/
-  assembly/assembly.scad   # the whole torso + both arms, posable (qL / qR joint angles)
+  assembly/assembly.scad   # the whole robot: legs, torso, both arms, posable (qL / qR / qLegL / qLegR)
   parts_left/ parts_right/ # one file per printable arm part per side: open, F6, export STL
   parts_torso/             # one-piece torso + its two shoulder hatches (old torso)
   torso_frame/             # torso on a 2020 aluminium frame: torso_frame.scad, README, generator/
   hardware/                # printed hubs and idler pins
   head/head.scad           # dome head with the RealSense D455
-  lib/                     # g1_servo_arm.scad + torso_frame_lib.scad (included by the files above)
+  legs/                    # pelvis + both legs with 6512 cycloidal actuators: legs.scad, parametric .scad, mirror_right.py
+  lib/                     # g1_servo_arm.scad, torso_frame_lib.scad, legs_lib.scad (included by the files above)
 STL/
   arms/                    # G1 arm link STLs, fixed shoulder roll link, cleaned rubber hands
   torso/                   # G1 torso split into bodies + voxel fallback
   torso_frame/             # printed parts of the framed torso
   head/                    # Unitree head_link.STL (stock collar) + exported head parts
+  legs/                    # left + right leg parts, pelvis halves, actuator/ (STLs, STEP)
   torso_waist_parts_unmodified/
 ```
 
