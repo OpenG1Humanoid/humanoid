@@ -1,0 +1,425 @@
+{
+ "left_shoulder_pitch_link.stl": {
+  "triangles": 562322,
+  "volume_cm3": 85.95,
+  "crumbs_removed": 1,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_shoulder_roll_link.stl": {
+  "triangles": 848232,
+  "volume_cm3": 137.48,
+  "crumbs_removed": 1,
+  "voids_filled": 16,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_shoulder_yaw_link.stl": {
+  "triangles": 842730,
+  "volume_cm3": 301.57,
+  "crumbs_removed": 0,
+  "voids_filled": 315,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_elbow_link.stl": {
+  "triangles": 537616,
+  "volume_cm3": 144.13,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_wrist_roll_link.stl": {
+  "triangles": 505740,
+  "volume_cm3": 18.73,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_wrist_roll_link_cap_wpitch.stl": {
+  "triangles": 15504,
+  "volume_cm3": 0.3,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_wrist_roll_link_cap_wpitch_idler.stl": {
+  "triangles": 4092,
+  "volume_cm3": 0.09,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_wrist_pitch_link.stl": {
+  "triangles": 724628,
+  "volume_cm3": 171.69,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_wrist_pitch_link_plug_wpitch.stl": {
+  "triangles": 84624,
+  "volume_cm3": 5.59,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_wrist_pitch_link_plug_wyaw.stl": {
+  "triangles": 84340,
+  "volume_cm3": 5.59,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_wrist_yaw_link.stl": {
+  "triangles": 1293920,
+  "volume_cm3": 170.98,
+  "crumbs_removed": 1,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_wrist_yaw_link_cap_wyaw.stl": {
+  "triangles": 15008,
+  "volume_cm3": 0.3,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_wrist_yaw_link_cap_wyaw_idler.stl": {
+  "triangles": 4132,
+  "volume_cm3": 0.09,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_shoulder_pitch_link.stl": {
+  "triangles": 562228,
+  "volume_cm3": 85.94,
+  "crumbs_removed": 3,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_shoulder_roll_link.stl": {
+  "triangles": 848284,
+  "volume_cm3": 137.46,
+  "crumbs_removed": 2,
+  "voids_filled": 9,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_shoulder_yaw_link.stl": {
+  "triangles": 842730,
+  "volume_cm3": 301.57,
+  "crumbs_removed": 0,
+  "voids_filled": 315,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_elbow_link.stl": {
+  "triangles": 537764,
+  "volume_cm3": 144.13,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_wrist_roll_link.stl": {
+  "triangles": 505726,
+  "volume_cm3": 18.73,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_wrist_roll_link_cap_wpitch.stl": {
+  "triangles": 15504,
+  "volume_cm3": 0.3,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_wrist_roll_link_cap_wpitch_idler.stl": {
+  "triangles": 4092,
+  "volume_cm3": 0.09,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_wrist_pitch_link.stl": {
+  "triangles": 724624,
+  "volume_cm3": 171.67,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_wrist_pitch_link_plug_wpitch.stl": {
+  "triangles": 84608,
+  "volume_cm3": 5.59,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_wrist_pitch_link_plug_wyaw.stl": {
+  "triangles": 84340,
+  "volume_cm3": 5.59,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_wrist_yaw_link.stl": {
+  "triangles": 1294016,
+  "volume_cm3": 170.95,
+  "crumbs_removed": 10,
+  "voids_filled": 6,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_wrist_yaw_link_cap_wyaw.stl": {
+  "triangles": 15048,
+  "volume_cm3": 0.3,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_wrist_yaw_link_cap_wyaw_idler.stl": {
+  "triangles": 4132,
+  "volume_cm3": 0.09,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_cartridge_roll.stl": {
+  "triangles": 776144,
+  "volume_cm3": 107.59,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_cartridge_roll.stl": {
+  "triangles": 776144,
+  "volume_cm3": 107.59,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_cartridge_cap_roll.stl": {
+  "triangles": 395804,
+  "volume_cm3": 40.88,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_cartridge_cap_roll.stl": {
+  "triangles": 395804,
+  "volume_cm3": 40.88,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_cartridge_yaw.stl": {
+  "triangles": 541660,
+  "volume_cm3": 68.49,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_cartridge_yaw.stl": {
+  "triangles": 541660,
+  "volume_cm3": 68.49,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_cartridge_cap_yaw.stl": {
+  "triangles": 154248,
+  "volume_cm3": 6.04,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_cartridge_cap_yaw.stl": {
+  "triangles": 154248,
+  "volume_cm3": 6.04,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_cartridge_elbow.stl": {
+  "triangles": 559040,
+  "volume_cm3": 68.13,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_cartridge_elbow.stl": {
+  "triangles": 559040,
+  "volume_cm3": 68.13,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_cartridge_cap_elbow.stl": {
+  "triangles": 154424,
+  "volume_cm3": 6.04,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_cartridge_cap_elbow.stl": {
+  "triangles": 154424,
+  "volume_cm3": 6.04,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_cartridge_wroll.stl": {
+  "triangles": 442268,
+  "volume_cm3": 44.52,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_cartridge_wroll.stl": {
+  "triangles": 442268,
+  "volume_cm3": 44.52,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "left_cartridge_cap_wroll.stl": {
+  "triangles": 121076,
+  "volume_cm3": 4.6,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "right_cartridge_cap_wroll.stl": {
+  "triangles": 121076,
+  "volume_cm3": 4.6,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "hardware/hub_DS3235.stl": {
+  "triangles": 272724,
+  "volume_cm3": 4.33,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "hardware/hub_X10PRO.stl": {
+  "triangles": 173024,
+  "volume_cm3": 1.96,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "hardware/hub_MG92B_wristroll.stl": {
+  "triangles": 125124,
+  "volume_cm3": 1.32,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "hardware/hub_MG92B_cover.stl": {
+  "triangles": 136664,
+  "volume_cm3": 1.96,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ },
+ "hardware/idler_pin.stl": {
+  "triangles": 35660,
+  "volume_cm3": 0.31,
+  "crumbs_removed": 0,
+  "voids_filled": 0,
+  "bridged": [],
+  "dropped": [],
+  "shells": 1
+ }
+}

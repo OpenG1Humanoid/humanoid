@@ -1,0 +1,89 @@
+{
+ "roll": {
+  "link": "shoulder_pitch_link",
+  "cartridge_radius": 33.78,
+  "bore_radius": 33.98,
+  "length": 59.9,
+  "min_wall_mm": 0.0,
+  "thin_spots": 25,
+  "thin_examples": [
+   [
+    0.0,
+    59.9,
+    100
+   ],
+   [
+    0.0,
+    59.9,
+    110
+   ],
+   [
+    0.0,
+    59.9,
+    120
+   ],
+   [
+    0.0,
+    59.9,
+    130
+   ]
+  ],
+  "inserts_not_in_solid": [],
+  "clashes_with": {},
+  "servo_wall_mm": 1.9,
+  "bearing_wall_mm": 10.28,
+  "spigot_wall_mm": 4.05
+ },
+ "yaw": {
+  "link": "shoulder_roll_link",
+  "cartridge_radius": 25.68,
+  "bore_radius": 25.88,
+  "length": 45.3,
+  "min_wall_mm": 1.75,
+  "thin_spots": 0,
+  "thin_examples": [],
+  "inserts_not_in_solid": [],
+  "clashes_with": {},
+  "servo_wall_mm": 1.9,
+  "bearing_wall_mm": 7.18,
+  "spigot_wall_mm": 2.51
+ },
+ "elbow": {
+  "link": "shoulder_yaw_link",
+  "cartridge_radius": 25.68,
+  "bore_radius": 25.88,
+  "length": 45.3,
+  "min_wall_mm": 2.75,
+  "thin_spots": 0,
+  "thin_examples": [],
+  "inserts_not_in_solid": [],
+  "clashes_with": {},
+  "servo_wall_mm": 1.9,
+  "bearing_wall_mm": 7.18,
+  "spigot_wall_mm": 2.51
+ },
+ "wroll": {
+  "link": "elbow_link",
+  "cartridge_radius": 20.5,
+  "bore_radius": 20.7,
+  "length": 41.8,
+  "min_wall_mm": 7.5,
+  "thin_spots": 0,
+  "thin_examples": [],
+  "inserts_not_in_solid": [],
+  "clashes_with": {},
+  "servo_wall_mm": 2.4,
+  "bearing_wall_mm": 2.0,
+  "spigot_wall_mm": 3.67
+ },
+ "pitchL": {
+  "servo_wall_mm": 1.9,
+  "bearing_wall_mm": 10.28,
+  "spigot_wall_mm": 4.05
+ },
+ "pitchR": {
+  "servo_wall_mm": 1.9,
+  "bearing_wall_mm": 10.28,
+  "spigot_wall_mm": 4.05
+ }
+}

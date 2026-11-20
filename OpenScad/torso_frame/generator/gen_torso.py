@@ -136,7 +136,8 @@ parts['top_panel'] = top
 # shoulder blocks + hatches ---------------------------------------------------------------------------
 for side, s, R in (('L', 1, R_blkL), ('R', -1, R_blkR)):
     tag = 'pitch' + side
-    src = (scut | plugs[tag]) & R
+    pl = plugs.get(tag, np.zeros(n, bool))      # servo hatch (none with the cartridge design)
+    src = (scut | pl) & R
     cradle = np.zeros(n, bool)
     cradle[reg] = ndimage.binary_dilation(src[reg], iterations=10) & S[reg]       # 5 mm round the servo
     blk = (shell4 | cradle) & R
@@ -151,7 +152,7 @@ for side, s, R in (('L', 1, R_blkL), ('R', -1, R_blkR)):
         blk &= ~cyl(2, c, 10.5/2, 8, 30, 1)               # head clearance above the pad
     blk &= ~scut & ~anyplug
     parts['shoulder_block_' + side] = blk
-    parts['hatch_' + side] = S & plugs[tag] & ~scut & R
+    if pl.any(): parts['hatch_' + side] = S & pl & ~scut & R
 
 # remove aluminium clearance from all printed parts, keep the main connected piece --------------------
 for k in list(parts):

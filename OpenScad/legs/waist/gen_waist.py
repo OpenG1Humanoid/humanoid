@@ -23,7 +23,12 @@ import json, os, sys
 import numpy as np
 from scipy import ndimage
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
-from meshsdf import load, mesh_sdf, vox_sdf, zcyl, ycyl, box, to_stl
+from meshsdf import load, mesh_sdf, vox_sdf, zcyl, ycyl, box
+sys.path.insert(0, os.path.join(HERE, '..', '..', 'pyparts'))
+from solid import finalize
+def to_stl(F, lo, h, path):
+    r = finalize(F, lo, h, path); print('   ', {k: r[k] for k in ('part', 'crumbs_removed', 'voids_filled', 'bridged', 'shells')}, flush=True)
+    return r['triangles'], r['volume_cm3'] * 1000
 STL = os.path.normpath(os.path.join(HERE, '..', '..', '..', 'STL', 'legs'))
 
 # ---------------- parameters ----------------

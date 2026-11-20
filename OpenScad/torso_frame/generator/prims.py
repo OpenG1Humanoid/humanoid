@@ -60,6 +60,14 @@ def prim_mask(P, M, prim):
     if k == "cylat": return (np.hypot(x-prim[1], y-prim[2]) <= prim[3]) & zr(prim[4], prim[5])
     if k == "hex":
         R = prim[1]/2; a = np.stack([np.abs(x*np.cos(t)+y*np.sin(t)) for t in np.radians([30, 90, 150])]); return np.all(a <= R, 0) & zr(prim[2], prim[3])
+    if k == "dcyl":
+        a = np.radians(prim[5]); u = x*np.cos(a)+y*np.sin(a)
+        return (np.hypot(x, y) <= prim[1]) & (u <= prim[4]) & zr(prim[2], prim[3])
+    if k == "boxr":
+        a = np.radians(prim[1]); u = x*np.cos(a)+y*np.sin(a); v = -x*np.sin(a)+y*np.cos(a)
+        return (u >= prim[2]) & (u <= prim[3]) & (v >= prim[4]) & (v <= prim[5]) & zr(prim[6], prim[7])
+    if k == "cone":
+        t = np.clip((z-prim[3])/(prim[4]-prim[3]), 0, 1); return (np.hypot(x, y) <= prim[1]+(prim[2]-prim[1])*t) & zr(prim[3], prim[4])
     if k == "rad":
         a = np.radians(prim[1]); u = x*np.cos(a)+y*np.sin(a); v = -x*np.sin(a)+y*np.cos(a)
         return (u >= prim[3]) & (u <= prim[4]) & (np.hypot(v, z-prim[2]) <= prim[5]/2)

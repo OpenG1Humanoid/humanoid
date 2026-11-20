@@ -10,7 +10,8 @@ import os, sys, struct
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 D = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', '..', 'STL', 'legs')
-PARTS = ['hip_pitch_link_integrated', 'hip_roll_link_integrated', 'hip_yaw_link_knee_integrated', 'knee_link_integrated']
+PARTS = ['hip_pitch_link_integrated', 'hip_roll_link_integrated', 'hip_yaw_link_knee_integrated', 'knee_link_integrated',
+         'knee_link_ankle', 'ankle_roll_link_ears']      # last two from ankle/gen_ankle.py
 
 def read(p):
     b = open(p, 'rb').read()
@@ -28,6 +29,7 @@ def write(p, T, header):
         f.write(header.encode()[:80].ljust(80, b' ')); f.write(struct.pack('<I', len(T))); f.write(rec.tobytes())
 
 for k in PARTS:
+    if not os.path.exists(os.path.join(D, f'left_{k}.stl')): print(f'  (no left_{k}.stl yet)'); continue
     T = read(os.path.join(D, f'left_{k}.stl'))
     M = T.copy(); M[:, :, 1] *= -1; M = M[:, [0, 2, 1]]        # mirror y, flip winding to keep normals outward
     write(os.path.join(D, f'right_{k}.stl'), M, f'right_{k}: mirror of left_{k} in y (mirror_right.py)')

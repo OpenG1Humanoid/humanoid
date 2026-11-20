@@ -2,6 +2,8 @@ import numpy as np, sys, os
 from scipy import ndimage
 from skimage import measure
 from voxmesh import write_stl
+sys.path.insert(0,os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','..','pyparts'))
+from solid import finalize
 from prims import WORK, TF
 d=np.load(os.path.join(WORK,'parts_0.5.npz')); lo=d['lo']; h=float(d['h'])
 E=np.load(os.path.join(WORK,'E_0.5.npz'))['E']
@@ -28,10 +30,8 @@ for k in d.files:
         f[~ndimage.binary_dilation(P,iterations=4)]=h*3     # keep only this part
     else:
         f=g_of(P)
-    f=np.pad(f,1,constant_values=h*3)
-    v,fc,_,_=measure.marching_cubes(f,0.0,spacing=(h,)*3,step_size=int(sys.argv[1]) if len(sys.argv)>1 else 2)
-    v=v-h+lo+a*h
-    T=v[fc]; vol=np.einsum('ij,ij->i',T[:,0],np.cross(T[:,1],T[:,2])).sum()/6
-    fn=os.path.join(OUT,f'{k}.stl'); write_stl(fn,v,fc,flip=vol<0); sz=os.path.getsize(fn); tot+=sz
-    print(f'{k:18s} {len(fc):8d} tris {sz/1e6:6.1f} MB  vol {abs(vol)/1000:.1f} cm3 (voxels {m.sum()*h**3/1000:.1f})',flush=True)
+    fn=os.path.join(OUT,f'{k}.stl')
+    r=finalize(f,lo+a*h-0.5*h,h,fn,debris_cm3=0.05,step=int(sys.argv[1]) if len(sys.argv)>1 else 2)   # one closed piece, no crumbs or air pockets
+    sz=os.path.getsize(fn); tot+=sz
+    print(f'{k:18s} {r["triangles"]:8d} tris {sz/1e6:6.1f} MB  vol {r["volume_cm3"]:.1f} cm3 (voxels {m.sum()*h**3/1000:.1f})  crumbs {r["crumbs_removed"]} voids {r["voids_filled"]} bridged {r["bridged"]}',flush=True)
 print('total MB',tot/1e6)

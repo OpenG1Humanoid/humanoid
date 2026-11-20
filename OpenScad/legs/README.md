@@ -3,7 +3,7 @@
 The left leg was built by `integrate_leg.py` (see `README_python_build.md`). The right leg is its
 mirror image in y, made by `mirror_right.py`.
 
-![legs](../../Assets/legs_preview.png)
+![legs](../../Assets/legs_exploded.png)
 
 ## Files
 
@@ -71,7 +71,7 @@ locked, so the G1's roll/pitch linkage (waist roll link, constraint rods, suppor
 needed. This joint uses the same actuator as the hips. The G1 waist yaw limit is 88 N·m, the same
 as the hip pitch and roll, so the motor needs the same ~5.9 N·m at 15:1.
 
-![section](../../Assets/waist_section.png)
+![waist cutaway](../../Assets/waist_cutaway.png)
 
 | Part | What it is |
 |---|---|
@@ -126,3 +126,40 @@ after changing a parameter, run `python waist/gen_waist.py` (about 2 minutes), t
 - **Untested here:** the SCAD changes haven't been rendered. Check them once with your `stock/`
   folder in place.
 - **Simulator:** the humanoid-gym model still has the 29-DoF waist (yaw, roll, pitch).
+
+## Ankle (two 6512s in the shin, G1-style linkage)
+
+`ankle/gen_ankle.py` builds the ankle from your shin and the G1 foot. It takes about 1 minute; run
+`mirror_right.py` afterwards to make the right leg.
+
+| File (STL/legs/) | What it is | Print |
+|---|---|---|
+| `{left,right}_knee_link_ankle.stl` | Shin with two actuator pockets, the same as the waist pocket: ring counterbore, 12 × M3 inserts, bay, and a wire/access bore out the far side | 1 each |
+| `{left,right}_ankle_roll_link_ears.stl` | The G1 foot, unchanged, plus two heel ears with M4 holes for the rod ends | 1 each |
+| `ankle_crank.stl` | Crank: 44 mm arm, bolts to the actuator output with 6 × M3 on the 36 mm PCD | 4 |
+| `waist_stator_carrier.stl` | The same drop-in stator carrier as the waist | 4 more |
+
+**Layout (left shin frame):**
+- **Actuator A** sits at z = −60 mm with its output on the outer side (+y).
+- **Actuator B** sits at z = −135 mm with its output on the inner side (−y).
+- **Cranks** point back at mid-range. A push rod runs from each crank down to the heel ear on the same side.
+- **Motion:** turning both cranks together pitches the foot; turning them in opposite directions rolls it.
+- **Outline:** the actuators stay inside the G1 calf.
+
+**To buy, per leg:**
+- 4 × M4 rod ends (ball joints).
+- Two rods of M4 threaded rod or 6 mm tube. Centre-to-centre ball distance: **238.4 mm** for A, **163.5 mm** for B.
+- 2 × M4 bolts at the cranks and 2 at the heel ears.
+
+The ankle pitch link (the cross between shin and foot) is still the stock G1 part.
+
+**Checks** (`ankle/check_ankle.py`, over the whole G1 ankle range: pitch −50° to +30°, roll ±15°):
+- **Crank swing:** 46° at most. The crank-to-rod angle stays at 44° or more, and every pose is reachable.
+- **Rods** clear the shin by 4 mm or more, with 4 mm rod-end housings.
+- **Heel ears** clear the shin by 3.7 mm or more.
+- **Cranks** sweep clear of the shin.
+- **Front of the ankle:** the stock G1 shin and foot come within 0.2 mm of each other there at full pitch with roll, so that is not from the new parts.
+
+**Torque:** each crank turns about 0.85 rad per rad of ankle motion. Peak ankle torque is about 39 N·m in pitch with both actuators pushing, and about 39 N·m in roll with them pushing in opposite directions.
+
+`OpenScad/lib/ankle_linkage.scad` (generated) moves the cranks and rods with the ankle angles in the assembly. In `assembly.scad`, set `qLegL` / `qLegR` = [hip pitch, hip roll, hip yaw, knee, **ankle pitch, ankle roll**].

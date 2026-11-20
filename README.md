@@ -83,14 +83,60 @@ shows an empty view.
 | Hip pitch, hip roll, knee | 6512 printed cycloidal, 15:1 | G1 limits 88 / 88 / 139 N·m | pelvis, hip pitch link, thigh |
 | Hip yaw | 6512 (in `g1_leg_actuators.scad`; the STLs still have the stock interface) | 88 N·m | hip roll link |
 | Waist yaw | 6512 | 88 N·m | pelvis top |
-| Ankles | not designed yet | – | – |
-| Shoulder pitch | DS3235 (40 × 20 × 38.5 mm) | 35 kg·cm @ 7.4 V | torso shoulder block |
-| Shoulder roll | DS3235 | 35 kg·cm | shoulder pitch link |
-| Shoulder yaw | KST X10 Pro (30 × 10 × 33.5 mm) | 11.5 kg·cm | shoulder roll link |
-| Elbow | KST X10 Pro | 11.5 kg·cm | shoulder yaw link |
-| Wrist roll | TowerPro MG92B (22.8 × 12 × 31 mm) | 3.5 kg·cm @ 6 V | elbow link |
+| Ankle pitch + roll | 2 × 6512 per leg in the shin, G1-style cranks and push rods (`OpenScad/legs/ankle/`) | ~39 N·m at the ankle | shin |
+| Shoulder pitch | DS3235 (40 × 20 × 38.5 mm), built in under a hatch, 6807 bearing round the output | 35 kg·cm @ 7.4 V | torso shoulder block |
+| Shoulder roll | DS3235 in a **cartridge**, plus a 608 in the fork's far arm | 35 kg·cm | shoulder pitch link |
+| Shoulder yaw | KST X10 Pro (30 × 10 × 33.5 mm) in a **cartridge** | 11.5 kg·cm | shoulder roll link |
+| Elbow | KST X10 Pro in a **cartridge** | 11.5 kg·cm | shoulder yaw link |
+| Wrist roll | TowerPro MG92B (22.8 × 12 × 31 mm) in a **cartridge** | 3.5 kg·cm @ 6 V | elbow link |
 | Wrist pitch + yaw | 2 × MG92B | 3.5 kg·cm | wrist pitch link |
 | Brows | 2 × SG90 | – | head |
+
+### Servo cartridges (arm joints)
+The shoulder roll, shoulder yaw, elbow and wrist roll servos sit in **cartridges**: round printed
+housings that slide into a round bore in the link and screw in. The servo sits inside, with its output on the
+joint axis. To fit a different motor later, make a new cartridge with the same outside.
+
+**Two points of contact.** Each cartridge has a thin ring bearing in its nose (6807 for the DS3235, 6805 for
+the X10 Pro and MG92B). The child link has a spigot that runs in the bearing, so the joint is carried by the
+bearing as well as the servo output. The shoulder roll is a fork, so it also gets a 608 bearing in the far
+arm: it sits in the cartridge's rear cap, with an 8 × 16 mm steel dowel pressed into the roll link. The
+wrist pitch and yaw were already supported on both sides by their idler pins.
+
+**Fitting a cartridge:**
+
+| Joint | Loads from | Held by | Notes |
+|---|---|---|---|
+| Shoulder yaw, elbow, wrist roll | The joint face | 3 lugs, M2.5 into heat-set inserts | The cap screws on the back with 2 × M2.5 × 6 |
+| Shoulder roll | The far face (the fork arms block the near one) | The rear cap: 2 × M3 button heads into the link, 2 × M2.5 × 10 into the cartridge | The cap carries the 608 |
+
+Cut the mounting tabs off the DS3235 and MG92B: the cartridge clamps the case between its front shoulder
+and the cap instead.
+
+**What changes on the outside:**
+- **Shoulder yaw:** the upper arm gets a sleeve where the X10 Pro cartridge sits (about 56 mm across instead of
+  44–48 mm), plus a face flange for the lugs.
+- **Shoulder roll:** the cartridge has a flat on its torso side, which clears the shoulder-pitch hex socket and
+  stops it rotating. Its cap flange covers the rounded edge of the far face.
+
+**The shoulder pitch stays built in:** a DS3235 cartridge is 68 mm across but the torso's shoulder socket is
+62 mm. From inside the torso, the 2020 top rail and crossbars block the way in. It does get the 6807 round its
+output, with the seat in the (now larger) servo hatch.
+
+**Printing:** print the cartridges back face down, so the bearing seat opens upwards with no overhang,
+and the roll cap outer face down.
+
+**Regenerating:** the cartridge geometry is in `OpenScad/generator/design.py` (`cartridge_joint`), and
+`emit.py` writes the parts. The checks, run from `OpenScad/generator/`:
+
+| Script | Checks |
+|---|---|
+| `check_cartridges.py` | Wall left round each bore, inserts in solid material, clashes with the other joints' cuts |
+| `check_attach.py` | Every spigot ring is rooted in solid material (more than 92% of its base), so nothing prints as a floating layer |
+| `check_screws.py` | Every child-to-hub screw comes out on the outside of the link |
+
+The original shoulder-yaw mesh is three solids in one file, which OpenSCAD's CGAL engine drops. `split_shells.py`
+splits it into `STL/arms/*_shoulder_yaw_link_shell*.stl`, and the library unions them.
 
 The 6512 needs about 5.9 N·m at the motor (15:1, before losses) to reach the G1's 88 N·m hip and
 waist limits, and about 9.3 N·m for the 139 N·m knee. Check these against your motor's datasheet.
@@ -107,6 +153,10 @@ The servo arms need roughly 1.3 N·m at the shoulder when held straight out, or 
 | TowerPro MG92B servo | 6 |
 | SG90 micro servo (brows) | 2 |
 | Round metal servo horns | 14 |
+| 6807 bearing (35 × 47 × 7): shoulder roll + shoulder pitch | 4 |
+| 6805 bearing (25 × 37 × 7): shoulder yaw, elbow, wrist roll | 6 |
+| 608 bearing + 8 × 16 mm steel dowel (shoulder roll far arm) | 2 + 2 |
+| M2.5 heat-set inserts + M2.5 × 8 / × 6 / × 10 screws (cartridge lugs and caps) | ~26 |
 | Intel RealSense D455 | 1 |
 | 16-channel servo driver (e.g. PCA9685): the 14 arm/shoulder servos + 2 brows | 1 |
 | Compute board (Raspberry Pi 5 or Jetson Orin Nano class) | 1 |
@@ -184,3 +234,30 @@ with a D455 camera. The leg and waist models still use the G1's own parameters f
   licence for redistribution of the meshes.
 - **Berkeley Humanoid Lite:** the printed cycloidal actuator used for the legs and waist
   ([paper](https://arxiv.org/abs/2504.17249), [design files](https://lite.berkeley-humanoid.org)).
+
+## Making the STLs (Python)
+
+Every printable part is made by a Python generator. Each writes its STLs through
+`OpenScad/pyparts/solid.py`, which:
+- fills sealed air pockets;
+- deletes crumbs;
+- joins pieces that touch or nearly touch (Unitree's meshes are often several bodies), and stops with an error
+  that says where a piece is if it can't be joined;
+- reads every STL back and checks it is **one closed piece**.
+
+OpenSCAD is still there for viewing (`assembly/assembly.scad`, the per-part files) and for the head.
+
+| Parts | Generator (run from its folder) | Output |
+|---|---|---|
+| Arm links, wrist plugs and caps, servo cartridges and caps, hubs | `OpenScad/generator/build_arm_stls.py` (about 20 min) | `STL/arms_print/` |
+| Leg links (6512 actuators) | `OpenScad/legs/integrate_leg.py` (your build) | `STL/legs/` |
+| Pelvis halves, waist yaw link, stator carrier | `OpenScad/legs/waist/gen_waist.py` | `STL/legs/` |
+| Shin with the ankle drive, foot, crank | `OpenScad/legs/ankle/gen_ankle.py`, then `mirror_right.py` | `STL/legs/` |
+| Framed torso panels, blocks, hatches, trays | `OpenScad/torso_frame/generator/` (`gen_torso.py`, then `export.py`) | `STL/torso_frame/` |
+
+`python export_stls.py` gathers them all into `STL_export/<group>/` with their print names, and renders
+only the head with OpenSCAD. `--openscad-arms` uses the old OpenSCAD route for the arms instead.
+
+The servos (arms) and the 6512 actuators (legs) all sit in round housings that bolt into round seats,
+so either can be swapped later. The shoulder pitch is the exception: its servo sits under a hatch,
+because a cartridge can't get past the torso's shoulder socket.

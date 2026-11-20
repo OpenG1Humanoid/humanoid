@@ -50,7 +50,7 @@ Dou = ndimage.distance_transform_edt(~E).astype(np.float32)*h
 np.subtract(depth, Dou, out=depth); del Dou   # >0 inside, <0 outside (one of the two terms is 0)
 acc = {}
 for k in ('front_panel', 'back_panel', 'top_panel', 'shoulder_block_L', 'shoulder_block_R'):
-    V = np.unique((load_stl_mm(os.path.join(TF, 'stl', f'{k}.stl'))/1000).reshape(-1, 3), axis=0)
+    V = np.unique((load_stl_mm(os.path.join(os.path.dirname(os.path.dirname(TF)), 'STL', 'torso_frame', f'{k}.stl'))/1000).reshape(-1, 3), axis=0)
     i = np.clip(np.round((V-lo)/h).astype(int), 0, np.array(E.shape)-1); V = V[np.abs(depth[tuple(i.T)]) <= 1.0]
     dd, ii = tree.query(V, k=16); best = np.full(len(V), np.inf)
     for j in range(16):

@@ -22,6 +22,9 @@ function LEG_J_PITCH(s) = leg_T([0, s * 64.452, -102.7]);
 function LEG_J_ROLL(s)  = leg_T([0, s * 52, -30.465]) * leg_Ry(-0.1749 * LEG_RAD);
 function LEG_J_YAW(s)   = leg_T([25.001, 0, -124.12]);
 function LEG_J_KNEE(s)  = leg_T([-78.273, s * 2.1489, -177.34]) * leg_Ry(0.1749 * LEG_RAD);
+function LEG_J_APITCH(s) = leg_T([0, -s * 0.094445, -300.01]);
+LEG_J_AROLL = leg_T([0, 0, -17.558]);
+show_feet = true;                   // ankle drive + foot (stock G1 ankle pitch link, G1 foot with rod ears)
 
 // actuator frames (z out of the joint face, z = 0 on the output face), from g1_leg_actuators.scad
 LEG_D_ROLL = 33.5014; LEG_D_KNEE = 15.3733; LEG_ROLL_CLOCK = 0;
@@ -56,7 +59,46 @@ module pelvis() {
 // waist yaw link (turns with the torso), in the pelvis frame at zero yaw
 module waist_yaw_link() color("#9fb4c8") leg_stl("waist_yaw_link_integrated");
 
-// one leg, in the pelvis frame. side = "left" | "right", q = [hip_pitch, hip_roll, hip_yaw, knee] (deg)
+// ---- ankle: two 6512s in the shin drive pitch + roll through cranks and push rods (legs/ankle/gen_ankle.py)
+include <ankle_linkage.scad>
+show_ankle_drive = true;            // actuators, cranks and rods (false: just the shin and foot)
+function leg_v(M, p) = let(r = M * [p[0], p[1], p[2], 1]) [r[0], r[1], r[2]];
+function ank_foot_M(qp, qr) = LEG_J_APITCH(1) * leg_Ry(qp) * LEG_J_AROLL * leg_Rx(qr);
+// crank angles from the ankle angles (deg in, deg out), linearised at zero
+function ank_phi(qp, qr) = [for (i = [0:1]) (ANK_PHI0[i] + ANK_J[i][0] * qp / LEG_RAD + ANK_J[i][1] * qr / LEG_RAD) * LEG_RAD];
+
+module ank_rod(a, b) {
+    color("#9aa0a6") hull() { translate(a) sphere(r = 3, $fn = 16); translate(b) sphere(r = 3, $fn = 16); }
+    color("#c0c4c8") { translate(a) sphere(r = 5, $fn = 20); translate(b) sphere(r = 5, $fn = 20); }   // rod-end balls
+}
+// everything below the knee for the LEFT leg, in the shin frame; qp, qr in degrees
+module ankle_left(qp = 0, qr = 0) {
+    ph = ank_phi(qp, qr);
+    if (show_ankle_drive) {
+        for (k = [0:1]) {
+            A = k == 0 ? ANK_ACT_A : ANK_ACT_B;
+            multmatrix(A) {
+                leg_actuator();
+                rotate([0, 0, ph[k]]) color("#d9534f") leg_stl("ankle_crank");
+            }
+            tip = leg_v(A * leg_Rz(ph[k]), [-ANK_RC, 0, ANK_BALL_ZA]);
+            ball = leg_v(ank_foot_M(qp, qr), [ANK_FOOT_BALL[0], (k == 0 ? 1 : -1) * ANK_FOOT_BALL[1], ANK_FOOT_BALL[2]]);
+            ank_rod(tip, ball);
+        }
+    }
+    multmatrix(LEG_J_APITCH(1) * leg_Ry(qp)) {
+        color("#3a3a3a") scale(1000) import(str(legs_stl_dir, "feet/left_ankle_pitch_link.STL"), convexity = 10);
+        multmatrix(LEG_J_AROLL * leg_Rx(qr)) color("#2a2a2a") leg_stl("left_ankle_roll_link_ears");
+    }
+}
+// right leg = the left one mirrored in y (roll angle changes sign under the mirror)
+module leg_foot(side, qp = 0, qr = 0) {
+    if (side == "left") ankle_left(qp, qr);
+    else mirror([0, 1, 0]) ankle_left(qp, -qr);
+}
+
+// one leg, in the pelvis frame. side = "left" | "right",
+// q = [hip_pitch, hip_roll, hip_yaw, knee] or [.., ankle_pitch, ankle_roll] (deg)
 module leg(side, q = [0, 0, 0, 0]) {
     s = side == "left" ? 1 : -1;
     multmatrix(LEG_J_PITCH(s) * leg_Ry(q[0])) {
@@ -67,7 +109,10 @@ module leg(side, q = [0, 0, 0, 0]) {
             multmatrix(LEG_J_YAW(s) * leg_Rz(q[2])) {
                 color("#c8c4d4") leg_stl(str(side, "_hip_yaw_link_knee_integrated"));
                 if (show_leg_actuators) multmatrix(LEG_KNEE_ACT(s)) leg_actuator();
-                multmatrix(LEG_J_KNEE(s) * leg_Ry(q[3])) color("#5b7fc9") leg_stl(str(side, "_knee_link_integrated"));
+                multmatrix(LEG_J_KNEE(s) * leg_Ry(q[3])) {
+                    color("#5b7fc9") leg_stl(str(side, "_knee_link_ankle"));     // shin with the two ankle actuators
+                    if (show_feet) leg_foot(side, len(q) > 4 ? q[4] : 0, len(q) > 5 ? q[5] : 0);
+                }
             }
         }
     }
