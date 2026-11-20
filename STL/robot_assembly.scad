@@ -212,11 +212,11 @@ module left_knee(){ multmatrix([[0.984744,0.000000,0.174010,-78.273000],[0.00000
   left_ankle_pitch();
 }}
 module left_hip_yaw(){ multmatrix([[1.000000,0.000000,0.000000,25.001000],[0.000000,1.000000,0.000000,0.000000],[0.000000,0.000000,1.000000,-124.120000],[0.000000,0.000000,0.000000,1.000000]]) rotate(a=l_hip_yaw, v=[0,0,1]) {
-  color([0.82,0.83,0.86]) import("legs/left_hip_yaw_link_knee_integrated.stl", convexity=10);
+  color([0.82,0.83,0.86]) import("legs/left_hip_yaw_link_knee_integrated_yaw.stl", convexity=10);
   left_knee();
 }}
 module left_hip_roll(){ multmatrix([[0.984744,0.000000,-0.174010,0.000000],[0.000000,1.000000,0.000000,52.000000],[0.174010,0.000000,0.984744,-30.465000],[0.000000,0.000000,0.000000,1.000000]]) rotate(a=l_hip_roll, v=[1,0,0]) {
-  color([0.82,0.83,0.86]) import("legs/left_hip_roll_link_integrated.stl", convexity=10);
+  color([0.82,0.83,0.86]) import("legs/left_hip_roll_link_integrated_yaw.stl", convexity=10);
   left_hip_yaw();
 }}
 module left_hip_pitch(){ multmatrix([[1.000000,0.000000,0.000000,0.000000],[0.000000,1.000000,0.000000,64.452000],[0.000000,0.000000,1.000000,-102.700000],[0.000000,0.000000,0.000000,1.000000]]) rotate(a=l_hip_pitch, v=[0,1,0]) {
@@ -235,11 +235,11 @@ module right_knee(){ multmatrix([[0.984744,0.000000,0.174010,-78.273000],[0.0000
   right_ankle_pitch();
 }}
 module right_hip_yaw(){ multmatrix([[1.000000,0.000000,0.000000,25.001000],[0.000000,1.000000,0.000000,0.000000],[0.000000,0.000000,1.000000,-124.120000],[0.000000,0.000000,0.000000,1.000000]]) rotate(a=r_hip_yaw, v=[0,0,1]) {
-  color([0.82,0.83,0.86]) import("legs/right_hip_yaw_link_knee_integrated.stl", convexity=10);
+  color([0.82,0.83,0.86]) import("legs/right_hip_yaw_link_knee_integrated_yaw.stl", convexity=10);
   right_knee();
 }}
 module right_hip_roll(){ multmatrix([[0.984744,0.000000,-0.174010,0.000000],[0.000000,1.000000,0.000000,-52.000000],[0.174010,0.000000,0.984744,-30.465000],[0.000000,0.000000,0.000000,1.000000]]) rotate(a=r_hip_roll, v=[1,0,0]) {
-  color([0.82,0.83,0.86]) import("legs/right_hip_roll_link_integrated.stl", convexity=10);
+  color([0.82,0.83,0.86]) import("legs/right_hip_roll_link_integrated_yaw.stl", convexity=10);
   right_hip_yaw();
 }}
 module right_hip_pitch(){ multmatrix([[1.000000,0.000000,0.000000,0.000000],[0.000000,1.000000,0.000000,-64.452000],[0.000000,0.000000,1.000000,-102.700000],[0.000000,0.000000,0.000000,1.000000]]) rotate(a=r_hip_pitch, v=[0,1,0]) {
