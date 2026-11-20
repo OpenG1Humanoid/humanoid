@@ -2,7 +2,7 @@
 
 A cheaper, 3D-printable humanoid that keeps the look and joint layout of the Unitree G1. Everything here is printable STL files plus OpenSCAD assemblies for previewing the whole robot.
 
-![Both arms](STL/arms/renders/01_both_arms.png)
+![Both arms](Assets/01_both_arms.png)
 
 - **Legs and waist:** 3D-printed cycloidal actuators of the Berkeley 6512 style.
 - **Arms:** cheap hobby servos in swappable cartridges.
@@ -70,7 +70,7 @@ Each arm has seven joints, laid out as on the G1:
 
 The parts list, print settings, assembly steps for each joint and known limitations are in **[`STL/arms/README.md`](STL/arms/README.md)**. The main limitation is that shoulder yaw is the weakest joint.
 
-![Cutaway](STL/arms/renders/02_left_cutaway.png)
+![Cutaway](Assets/02_left_cutaway.png)
 
 ## Legs
 
