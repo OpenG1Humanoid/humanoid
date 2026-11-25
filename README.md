@@ -21,7 +21,7 @@ STL/
 │   ├── left/  right/
 │   │   ├── links/                 7 edited G1 arm links per side
 │   │   └── actuators/<joint>/     servo cartridges, caps, horn plates, idler pins
-│   ├── fit_tests/                 print these first
+│   ├── fit_tests/                 print these first (horn pocket tests)
 │   ├── renders/                   pictures
 │   └── generator/                 Python that generates the arm parts
 ├── legs/                        Pelvis halves, hip/knee/ankle links with the actuator built in, waist yaw link
@@ -32,6 +32,8 @@ STL/
 ├── torso/                       Older stock torso pieces (reference only)
 ├── torso_waist_parts_unmodified/  Stock G1 waist linkage (reference)
 └── head/                        Head frame, panels and brows
+tools/
+└── arm_fixes/                   Python that recut the arm horn pockets and cable channels
 ```
 
 ## Viewing the whole robot
@@ -65,7 +67,8 @@ Each arm has seven joints, laid out as on the G1:
 | Wrist yaw | Micro 23×12 | 6803 idler |
 
 - **Cartridges:** each servo sits in a cartridge that slides into the link and screws in with M3 heat-set inserts, so servos can be swapped later.
-- **Horns:** the plastic cross horn that comes with the servo screws into a horn-shaped pocket.
+- **Horns:** the plastic 4-arm cross horn that comes with the servo screws into a horn-shaped pocket. The pocket has a round hub and its arm slots run out through the rim of the plate, so cross horns with long and short arms both fit.
+- **Cables:** a servo's lead comes out at the spline end, low on the case. Each cartridge has a channel from there to the cable exit at the far end (see [`STL/arms/README.md`](STL/arms/README.md#cables)).
 - **Outer shape:** the outside of every link is the original G1 shape.
 
 The parts list, print settings, assembly steps for each joint and known limitations are in **[`STL/arms/README.md`](STL/arms/README.md)**. The main limitation is that shoulder yaw is the weakest joint.
@@ -90,7 +93,7 @@ The hip, knee and ankle links are G1 links edited to hold a 6512-style 3D-printe
 
 - 0.4 mm nozzle, at least 4 walls (1.6 mm).
 - M3 heat-set inserts use Ø4.0 mm holes.
-- Print `STL/arms/fit_tests/` before the big arm parts to check the bearing seats, insert holes and servo pockets on your printer.
+- Print `STL/arms/fit_tests/` before the big arm parts. `horn_pocket_test_std.stl` and `horn_pocket_test_micro.stl` check that your horns drop into the pockets.
 
 ## Status
 
