@@ -73,6 +73,24 @@ On the yoke joints, the bottom of the servo sits right over the idler bearing's 
 
 Across each joint, the wires run outside with a service loop, as on most hobby-servo arms. Fit plugs after routing.
 
+## Shoulder roll link: reinforced yoke
+
+In the stock G1, the roll link's two ears hang off the base through a cup-shaped shell only about 1.5–2 mm thick. That is fine in aluminium but weak in plastic. The printed roll link (`links/*_shoulder_roll_link.stl` and its copy in `actuators/shoulder_roll/`) now has up to 6 mm of extra material on the **inside** of that cup. It thickens the ear roots and joins the cup to the base all round.
+
+- The outside G1 shape is unchanged.
+- The new material keeps **2 mm clear** of everything that moves with the pitch side: the pitch link, the roll cartridge with its servo, and the cap. The clearance holds over a roll of ±133°.
+- The yaw-cartridge pocket, its cable notch, the yaw cable exit in the top of the base and the two M3×18 screw columns are left open.
+- It adds about 34 cm³ per arm, which is roughly 15–20 g of PLA at normal wall and infill settings.
+
+![Shoulder roll reinforcement](../../Assets/shoulder_roll_reinforcement.png)
+
+For the strongest part, print the roll link with 5 walls and at least 30 % infill.
+
+- **Best:** lie it on its side, with an ear facing the bed. Each layer then runs continuously from ear to base.
+- **Avoid:** standing it on the base. That puts layer lines straight across the ear roots, which is where it breaks.
+
+It needs supports in either orientation.
+
 ## Parts per arm
 
 | Item | Qty | Where |
@@ -138,7 +156,7 @@ Across each joint, the wires run outside with a service loop, as on most hobby-s
 - **Servo lead exits.** The channels are sized for a flat 3-wire lead about 4.5 × 1.4 mm (standard) or 3.6 × 1.1 mm (micro). A servo with a large rubber grommet where the lead leaves the case may need the grommet trimmed.
 - **Ears.** The wrist-roll and wrist-yaw links were thin 1.5 mm shells. Their ears are thickened inward, which can't be seen from outside, so they can hold the plate screws and the idler pin.
 
-## Changing the horn pockets or cable channels
+## Changing the horn pockets, cable channels or reinforcement
 
 `tools/arm_fixes/` holds the script that made these edits. It cuts the pockets and channels into the previous release of the arm STLs (git commit `e712c40`):
 
@@ -149,6 +167,7 @@ git -C ../.. worktree add /tmp/openg1_e712c40 e712c40    # the arm STLs before t
 export ARMS_SRC=/tmp/openg1_e712c40/STL/arms
 export ARMS_OUT=$PWD/out
 python jobs.py              # everything; or e.g. `python jobs.py plate` / `cable` / `elbowlink` / `fittest`
+python reinforce.py         # shoulder roll link reinforcement (run after jobs.py)
 ```
 
-It needs numpy, scipy and scikit-image. The horn sizes are in `HORN` and the cable channel sizes are in `WIRE`, both at the top of `jobs.py`. Copy the results from `out/` over `STL/arms/`.
+It needs numpy, scipy and scikit-image. The horn sizes are in `HORN` and the cable channel sizes are in `WIRE`, both at the top of `jobs.py`. The reinforcement thickness, clearance and roll range are at the top of `reinforce.py`. Copy the results from `out/` over `STL/arms/`.

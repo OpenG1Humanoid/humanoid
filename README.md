@@ -33,7 +33,7 @@ STL/
 ├── torso_waist_parts_unmodified/  Stock G1 waist linkage (reference)
 └── head/                        Head frame, panels and brows
 tools/
-└── arm_fixes/                   Python that recut the arm horn pockets and cable channels
+└── arm_fixes/                   Python that recut the arm horn pockets and cable channels, and reinforces the shoulder roll link
 ```
 
 ## Viewing the whole robot
@@ -68,6 +68,7 @@ Each arm has seven joints, laid out as on the G1:
 
 - **Cartridges:** each servo sits in a cartridge that slides into the link and screws in with M3 heat-set inserts, so servos can be swapped later.
 - **Horns:** the plastic 4-arm cross horn that comes with the servo screws into a horn-shaped pocket. The pocket has a round hub and its arm slots run out through the rim of the plate, so cross horns with long and short arms both fit.
+- **Shoulder roll link:** the thin G1 cup that joins the yoke ears to the base is thickened on the inside, up to 6 mm, keeping 2 mm clear of the pitch side over the whole roll range.
 - **Cables:** a servo's lead comes out at the spline end, low on the case. Each cartridge has a channel from there to the cable exit at the far end (see [`STL/arms/README.md`](STL/arms/README.md#cables)).
 - **Outer shape:** the outside of every link is the original G1 shape.
 

@@ -46,6 +46,7 @@ class Grid:
             self.d[sl] = np.minimum(self.d[sl], s)
 
     def mesh(self, max_err=0.02, min_faces=2000, min_cos=0.3):
+        self.d[self.d == 0] = 1e-5   # exact zeros make degenerate MC triangles (holes)
         vs, fs, off = [], [], 0
         nx = self.d.shape[0]; step = 120
         for a in range(0, nx - 1, step):
