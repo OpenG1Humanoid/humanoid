@@ -70,7 +70,7 @@ module left_shoulder_yaw_link(){
   multmatrix([[1.000000,0.000000,0.000000,0.000000],[0.000000,1.000000,0.000000,6.240000],[0.000000,0.000000,1.000000,-103.200000],[0.000000,0.000000,0.000000,1.000000]]) rotate(a=l_shoulder_yaw, v=[0,0,1]) {
     if (show_links) link_col() import("left/links/left_shoulder_yaw_link.stl", convexity=10);
     if (show_actuators) {
-      color([0.3,0.8,0.3]) multmatrix([[1.000000,0.000000,0.000000,-0.000960],[0.000000,1.000000,0.000000,0.000000],[0.000000,0.000000,1.000000,-6.700665],[0.000000,0.000000,0.000000,1.000000]]) import("left/actuators/shoulder_yaw/left_shoulder_yaw_hornplate.stl", convexity=10);
+      color([0.95,0.55,0.15]) multmatrix([[-0.707107,-0.707107,0.000000,-0.000212],[-0.707107,0.707107,0.000000,-0.000212],[0.000000,0.000000,-1.000000,-0.250000],[0.000000,0.000000,0.000000,1.000000]]) import("left/actuators/shoulder_yaw/left_shoulder_yaw_cartridge.stl", convexity=10);
       color([0.2,0.6,0.9]) multmatrix([[-0.559193,-0.829038,0.000000,10.051072],[0.000000,0.000000,-1.000000,20.041660],[0.829038,-0.559193,0.000000,-72.019813],[0.000000,0.000000,0.000000,1.000000]]) import("left/actuators/elbow/left_elbow_cap.stl", convexity=10);
       color([0.95,0.55,0.15]) multmatrix([[-0.559193,-0.829038,0.000000,10.050037],[0.000000,0.000000,-1.000000,18.040907],[0.829038,-0.559193,0.000000,-72.021069],[0.000000,0.000000,0.000000,1.000000]]) import("left/actuators/elbow/left_elbow_cartridge.stl", convexity=10);
     }
@@ -82,8 +82,7 @@ module left_shoulder_roll_link(){
     if (show_links) link_col() import("left/links/left_shoulder_roll_link.stl", convexity=10);
     if (show_actuators) {
       color([0.3,0.8,0.3]) multmatrix([[0.000000,0.000000,-1.000000,30.602095],[-0.615659,0.788012,0.000000,0.000000],[0.788012,0.615659,0.000000,0.000000],[0.000000,0.000000,0.000000,1.000000]]) import("left/actuators/shoulder_roll/left_shoulder_roll_hornplate.stl", convexity=10);
-      color([0.2,0.6,0.9]) multmatrix([[1.000000,0.000000,0.000000,5.400001],[0.000000,-1.000000,0.000000,6.239927],[0.000000,0.000000,-1.000000,-62.349899],[0.000000,0.000000,0.000000,1.000000]]) import("left/actuators/shoulder_yaw/left_shoulder_yaw_backcap.stl", convexity=10);
-      color([0.95,0.55,0.15]) multmatrix([[1.000000,0.000000,0.000000,0.000321],[0.000000,1.000000,0.000000,6.239340],[0.000000,0.000000,1.000000,-102.950101],[0.000000,0.000000,0.000000,1.000000]]) import("left/actuators/shoulder_yaw/left_shoulder_yaw_cartridge.stl", convexity=10);
+      color([0.3,0.8,0.3]) multmatrix([[-0.707107,-0.707107,0.000000,0.000707],[-0.707107,0.707107,0.000000,6.240707],[0.000000,0.000000,-1.000000,-96.499300],[0.000000,0.000000,0.000000,1.000000]]) import("left/actuators/shoulder_yaw/left_shoulder_yaw_hornplate.stl", convexity=10);
     }
     left_shoulder_yaw_link();
   }
@@ -146,7 +145,7 @@ module right_shoulder_yaw_link(){
   multmatrix([[1.000000,0.000000,0.000000,0.000000],[0.000000,1.000000,0.000000,-6.240000],[0.000000,0.000000,1.000000,-103.200000],[0.000000,0.000000,0.000000,1.000000]]) rotate(a=r_shoulder_yaw, v=[0,0,1]) {
     if (show_links) link_col() import("right/links/right_shoulder_yaw_link.stl", convexity=10);
     if (show_actuators) {
-      color([0.3,0.8,0.3]) multmatrix([[1.000000,0.000000,0.000000,-0.000960],[0.000000,1.000000,0.000000,0.000000],[0.000000,0.000000,1.000000,-6.700665],[0.000000,0.000000,0.000000,1.000000]]) import("right/actuators/shoulder_yaw/right_shoulder_yaw_hornplate.stl", convexity=10);
+      color([0.95,0.55,0.15]) multmatrix([[-0.707107,0.707107,0.000000,-0.000212],[0.707107,0.707107,0.000000,0.000212],[0.000000,0.000000,-1.000000,-0.250000],[0.000000,0.000000,0.000000,1.000000]]) import("right/actuators/shoulder_yaw/right_shoulder_yaw_cartridge.stl", convexity=10);
       color([0.2,0.6,0.9]) multmatrix([[-0.559193,0.829038,0.000000,10.051387],[0.000000,0.000000,1.000000,-20.041660],[0.829038,0.559193,0.000000,-72.019600],[0.000000,0.000000,0.000000,1.000000]]) import("right/actuators/elbow/right_elbow_cap.stl", convexity=10);
       color([0.95,0.55,0.15]) multmatrix([[-0.559193,0.829038,0.000000,10.050037],[0.000000,0.000000,1.000000,-18.040907],[0.829038,0.559193,0.000000,-72.021069],[0.000000,0.000000,0.000000,1.000000]]) import("right/actuators/elbow/right_elbow_cartridge.stl", convexity=10);
     }
@@ -158,8 +157,7 @@ module right_shoulder_roll_link(){
     if (show_links) link_col() import("right/links/right_shoulder_roll_link.stl", convexity=10);
     if (show_actuators) {
       color([0.3,0.8,0.3]) multmatrix([[0.000000,0.000000,-1.000000,30.602095],[0.615659,0.788012,0.000000,0.000000],[0.788012,-0.615659,0.000000,0.000000],[0.000000,0.000000,0.000000,1.000000]]) import("right/actuators/shoulder_roll/right_shoulder_roll_hornplate.stl", convexity=10);
-      color([0.2,0.6,0.9]) multmatrix([[1.000000,0.000000,0.000000,5.400001],[0.000000,-1.000000,0.000000,-6.239927],[0.000000,0.000000,-1.000000,-62.349899],[0.000000,0.000000,0.000000,1.000000]]) import("right/actuators/shoulder_yaw/right_shoulder_yaw_backcap.stl", convexity=10);
-      color([0.95,0.55,0.15]) multmatrix([[1.000000,0.000000,0.000000,0.000321],[0.000000,1.000000,0.000000,-6.239340],[0.000000,0.000000,1.000000,-102.950101],[0.000000,0.000000,0.000000,1.000000]]) import("right/actuators/shoulder_yaw/right_shoulder_yaw_cartridge.stl", convexity=10);
+      color([0.3,0.8,0.3]) multmatrix([[-0.707107,0.707107,0.000000,0.000707],[0.707107,0.707107,0.000000,-6.240707],[0.000000,0.000000,-1.000000,-96.499300],[0.000000,0.000000,0.000000,1.000000]]) import("right/actuators/shoulder_yaw/right_shoulder_yaw_hornplate.stl", convexity=10);
     }
     right_shoulder_yaw_link();
   }

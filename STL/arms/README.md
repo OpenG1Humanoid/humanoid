@@ -19,7 +19,7 @@ fit_tests/         print these first (horn pockets)
 |---|---|---|---|
 | Shoulder pitch | Torso shoulder block (your existing pocket) | Standard 40×20 | The arm side is `shoulder_pitch_hornhub` plus a hex socket in the pitch link. |
 | Shoulder roll | Pitch link | **Standard 40×20, 35 kg·cm** (DS3235) | Yoke: horn plate in the front ear, **6803** on the back. |
-| Shoulder yaw | Roll-link bottom cylinder | Micro 23×12, strongest you can get | Front **6805** bearing around the horn plate. |
+| Shoulder yaw | Top of the upper arm (yaw link) | **Micro 23×12, HV coreless, e.g. SERVOMY SDS1901** | **6805** in the cartridge's top ring around the horn plate. The horn plate keys up into a hex socket in the bottom of the roll link. |
 | Elbow | Upper-arm (yaw-link) lobe | Standard 40×20 (DS3218 / DS3235) | Horn screws straight into a horn-shaped pocket in the elbow disc. |
 | Wrist roll | Forearm end | Micro 23×12 (MG90S / MG92B) | Front **6805** bearing around the horn plate. |
 | Wrist pitch | Wrist-pitch link, lobe 1 | Micro 23×12 | Yoke: horn plate in the front ear, **6803** on the back. |
@@ -57,7 +57,7 @@ Every joint uses the plastic **4-arm cross horn** that comes in the servo's bag.
 
 A servo's lead comes out of the **spline end** of the case, low down next to the bottom cover. Each cartridge has a channel from there to the cable exit slot at the far end. From the exit slot, a 6 mm channel in the link runs toward the torso:
 - roll → torso opening
-- yaw → top of the roll yoke
+- yaw → out of the side of the upper arm near the top, through an 11.5 × 6.5 mm channel the servo plug fits through, then up the outside to the roll yoke
 - elbow → back of the upper arm
 - wrist roll → top of the forearm
 - wrist pitch and yaw → inside the wrist cup and under the neck
@@ -66,23 +66,26 @@ A servo's lead comes out of the **spline end** of the case, low down next to the
 |---|---|
 | Shoulder roll | The lead drops into the ear slot at the spline end. It runs round the 6803 bearing in a 6 × 3 mm channel in the bottom of the cartridge, then along a 2 mm groove in the cap to the exit slot. |
 | Wrist pitch, wrist yaw | The lead goes into a short tunnel in the spline-end wall, which has a 0.6 mm floor over the bearing bore. It runs round the 6803 in a 4.2 × 3 mm channel, then along a 1.6 mm groove in the cap to the exit slot. |
-| Shoulder yaw | There is a notch through the spline-end wall at the bottom of the servo. The lead runs along a 1.6 mm groove in the back cap to the exit notch. |
+| Shoulder yaw | There is a notch through the spline-end wall at the bottom of the servo. The lead runs along a 1.6 mm groove in the floor of the upper-arm pocket, under the servo, to an **11.5 × 6.5 mm channel** out through the side of the upper arm. The channel is big enough to pass a standard 3-pin servo plug, so the plug doesn't have to be cut off. |
 | Elbow, wrist roll | There is a notch through the spline-end wall at the bottom of the servo. The lead runs along a 1.5 mm groove in the cartridge floor to the exit slot. The floor is 1 mm thick under the groove. |
 
 On the yoke joints, the bottom of the servo sits right over the idler bearing's bore, which turns with the yoke. The channel goes round the bearing so the wire never lies on anything that moves.
 
 Across each joint, the wires run outside with a service loop, as on most hobby-servo arms. Fit plugs after routing.
 
-## Shoulder roll link: reinforced yoke
+## Shoulder roll link: solid cup
 
-In the stock G1, the roll link's two ears hang off the base through a cup-shaped shell only about 1.5–2 mm thick. That is fine in aluminium but weak in plastic. The printed roll link (`links/*_shoulder_roll_link.stl` and its copy in `actuators/shoulder_roll/`) now has up to 6 mm of extra material on the **inside** of that cup. It thickens the ear roots and joins the cup to the base all round.
+In the stock G1, the roll link's ears hang off the base through a thin outer skin, with an **empty ring** between that skin and the yaw cylinder, just under the yoke floor. In plastic that is the weak point. The roll link here is your **original** roll link with:
 
-- The outside G1 shape is unchanged.
-- The new material keeps **2 mm clear** of everything that moves with the pitch side: the pitch link, the roll cartridge with its servo, and the cap. The clearance holds over a roll of ±133°.
-- The yaw-cartridge pocket, its cable notch, the yaw cable exit in the top of the base and the two M3×18 screw columns are left open.
-- It adds about 34 cm³ per arm, which is roughly 15–20 g of PLA at normal wall and infill settings.
+- the empty ring filled **solid**, inside the existing skin, up to the yoke floor. At the front, where the skin is open for the pitch side to swing through, the fill stops 2 mm clear of it over the full roll range. Every new surface is either the original skin, the original yoke floor or that clearance surface, so there are no blobs;
+- the side walls between the yoke floor and the ears **thickened inward by up to 4 mm** (about 21 cm³). The new inner face is a constant 4 mm offset of the original wall, or, where the pitch link passes closer, a surface 2 mm clear of it over the full roll range (−95…133°, worked out from the actual pitch link and roll cartridge). The yoke floor stays flat; ~1 mm seams in the skin are closed first;
+- the old shoulder-yaw cartridge pocket, its screw holes and the old 6 mm cable hole filled solid (the servo has moved to the upper arm);
+- a hex socket in the bottom for the yaw horn plate's key, with a 0.3 mm recess over the plate's shoulder;
+- two M3 holes from the yoke floor straight down to the socket, counterbored at the floor, for the M3×50 that hold the horn plate.
 
-![Shoulder roll reinforcement](../../Assets/shoulder_roll_reinforcement.png)
+The outside G1 shape is unchanged. The roll link gains about 85 cm³ (all inside), roughly 50–80 g of PLA depending on infill. The ears themselves above the roots can't get thicker inward: the pitch link swings within ~2 mm of their inner faces.
+
+![Roll link, original vs new](../../Assets/shoulder_roll_solid.png)
 
 For the strongest part, print the roll link with 5 walls and at least 30 % infill.
 
@@ -99,13 +102,14 @@ It needs supports in either orientation.
 | Micro 23×12 servo | 4 | Shoulder yaw, wrist roll, pitch, yaw |
 | 6803-2RS (17×26×5) | 3 | Roll, wrist-pitch and wrist-yaw idlers |
 | 6805-2RS (25×37×7) | 2 | Shoulder yaw, wrist roll |
-| M3 heat-set inserts (hole Ø4.0) | 42 | |
+| M3 heat-set inserts (hole Ø4.0) | 42 | incl. 2 in the shoulder-yaw horn plate key and 2 in the upper-arm pocket floor |
 | M3×10 socket head | 13 | Cartridge flanges (roll, wrist roll, wrist pitch, wrist yaw) |
 | M3×10 countersunk | 4 | Elbow retaining ring |
-| M3×8 socket head | 8 | Roll ear → horn plate (4), shoulder-yaw key (2), shoulder-pitch hub (2) |
+| M3×8 socket head | 6 | Roll ear → horn plate (4), shoulder-pitch hub (2) |
 | M3×8 countersunk | 3 | Shoulder-roll idler pin flange |
 | M3×6 socket head | 12 | Wrist ears → horn plates (8), wrist-roll base → plate (4) |
-| M3×18 socket head | 2 | Shoulder-yaw cartridge, from the top of the roll yoke |
+| M3×30 socket head | 2 | Shoulder-yaw cartridge → upper arm, from the top, through the cartridge lugs |
+| M3×50 socket head | 2 | Roll link → shoulder-yaw horn plate, from the yoke floor |
 | M2×6 self-tapping | ~28 | Horn arms into the horn pockets (4 per horn) |
 
 ## Printing
@@ -128,11 +132,19 @@ It needs supports in either orientation.
    - Shoulder roll: 3 countersunk screws.
    - Wrists: press fit, plus a drop of CA glue if it's loose.
 
-**Shoulder yaw, loaded from the bottom and screwed from the top**
-1. Put the servo in the cartridge. Fold the lead out through the notch at the spline end, lay it in the back-cap groove and fit the back cap. Slide the assembly up into the roll-link cylinder.
-2. Fit 2× M3×18 from the top of the yoke base into the cartridge lugs.
-3. Press the 6805 onto the horn plate, push it into the cartridge's front seat onto the spline, and fit the centre screw.
-4. Fit the upper arm's hex socket over the plate key, then 2 radial M3×8.
+**Shoulder yaw: servo dropped into the upper arm, everything screwed from the top**
+
+Parts in `actuators/shoulder_yaw/`: `cartridge`, `hornplate`, and the upper arm itself (`shoulder_yaw_link`, a print-oriented copy of `links/*_shoulder_yaw_link.stl`). There is no back cap any more: the floor of the upper-arm pocket does that job.
+
+1. Press 2 M3 inserts into the pocket floor in the top of the upper arm, and 2 into the end face of the horn plate's hex key.
+2. Put the servo in the cartridge, spline towards the big ring. Fold the lead out through the notch at the spline end.
+3. Lower the cartridge into the top of the upper arm, ring up, flush with the top face. Lay the lead in the floor groove and push the plug out through the channel in the side of the arm.
+4. From the top, fit 2× M3×30 down through the counterbored holes in the cartridge lugs (they sit just under the bearing seat) into the floor inserts.
+5. Press the 6805 into the cartridge's top ring. Screw the cross horn into the horn plate, push the plate through the bearing onto the spline and fit the centre screw through the key.
+6. Offer the upper arm up to the roll link: the hex key goes into the socket in the bottom of the roll link.
+7. From inside the yoke, fit 2× M3×50 down through the yoke floor into the key's inserts.
+
+The arm hangs from the roll link through the horn plate and the 6805. The servo takes only the yaw torque. Checked on the assembled parts at yaw 0, ±60 and ±150: nothing touches. The cartridge lifts straight out of the upper arm and the key pulls straight out of the socket.
 
 **Wrist roll, loaded from the front with a bearing cap**
 1. Put the cartridge in the forearm end. Lay the servo lead in the floor groove and out of the exit slot, then push the servo in.
@@ -151,6 +163,9 @@ It needs supports in either orientation.
 
 ## Things to check before the full print
 
+- **Shoulder-yaw pocket floor.** The upper-arm pocket floor is about 2 mm thick over the elbow cavity (1.75 mm under the wire groove). It only carries the servo, but print the upper arm with solid floors (at least 6 top layers).
+- **Shoulder-yaw bearing.** As in the original design, the 6805 is held in the cartridge ring by its press fit. If yours is loose, a drop of retaining compound or CA on the outer ring.
+
 - **Shoulder pitch hub.** The hub assumes the torso servo's horn sits about 2 mm inboard of the pitch link face (y ≈ −2 in the G1 frame). That is a best reading of the shoulder-block pocket, so check it against your torso.
 - **Elbow and shoulder pitch have no extra support bearing.** They are single-sided (cantilever) joints. The servo's own ball bearings carry the side load, which is small.
 - **Servo lead exits.** The channels are sized for a flat 3-wire lead about 4.5 × 1.4 mm (standard) or 3.6 × 1.1 mm (micro). A servo with a large rubber grommet where the lead leaves the case may need the grommet trimmed.
@@ -167,7 +182,9 @@ git -C ../.. worktree add /tmp/openg1_e712c40 e712c40    # the arm STLs before t
 export ARMS_SRC=/tmp/openg1_e712c40/STL/arms
 export ARMS_OUT=$PWD/out
 python jobs.py              # everything; or e.g. `python jobs.py plate` / `cable` / `elbowlink` / `fittest`
-python reinforce.py         # shoulder roll link reinforcement (run after jobs.py)
+python sweep2.py left; python sweep2.py right   # pitch-side sweep about the roll axis (real roll range)
+python newyaw.py horn|cart|yaw|roll left|right   # shoulder yaw moved into the upper arm, roll link made solid
+python check3.py left       # clashes at several yaw angles, insertion paths, elbow parts
 ```
 
 It needs numpy, scipy and scikit-image. The horn sizes are in `HORN` and the cable channel sizes are in `WIRE`, both at the top of `jobs.py`. The reinforcement thickness, clearance and roll range are at the top of `reinforce.py`. Copy the results from `out/` over `STL/arms/`.
